@@ -64,7 +64,30 @@ public class Utilities {
                 System.err.println(e.getMessage());
             }
         }
-        // step 4: creating an account
+        // step 4: Choose between new account or existing account
+        boolean repeatAccQuestion = true;
+        Account account= null;
+        while (repeatAccQuestion) {
+            try {
+                String accQuestion = getAnswer("Would you like to create a new Account?(Y/N): ");
+                if (accQuestion.equals("Y")) {
+                    account = createNewAccount(contact, opportunity);
+                    repeatOpportunity = false;
+                } else if (accQuestion.equals("N")) {
+                    account = null;
+                    repeatOpportunity = false;
+                }else throw new  IllegalArgumentException("Invalid answer, only Y/N");
+            } catch (IllegalArgumentException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        // step 6: adding the newly created objects to the lists and removing the lead
+        totalContacts.add(contact);
+        totalOpportunities.add(opportunity);
+        totalAccounts.add(account);
+        leadMap.remove(id);
+    }
+    public static Account createNewAccount(Contact contact,Opportunity opportunity){
         Account account = null;
         boolean repeatAccount = true;
         while (repeatAccount) {
@@ -79,11 +102,7 @@ public class Utilities {
                 System.err.println(e.getMessage());
             }
         }
-        // step 5: adding the newly created objects to the lists and removing the lead
-        totalContacts.add(contact);
-        totalOpportunities.add(opportunity);
-        totalAccounts.add(account);
-        leadMap.remove(id);
+        return account;
     }
 
     public static Contact newContact(Lead lead) {
