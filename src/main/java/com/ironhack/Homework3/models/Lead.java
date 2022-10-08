@@ -13,6 +13,9 @@ public class Lead {
     private long phoneNumber;
     private String email;
     private String companyName;
+    @ManyToOne
+    @JoinColumn(name = "sales_rep_id")
+    private SalesRep salesRepId;
 
     public Lead() {
     }
@@ -58,6 +61,14 @@ public class Lead {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public SalesRep getSalesRepId() {
+        return salesRepId;
+    }
+
+    public void setSalesRepId(SalesRep salesRepId) {
+        this.salesRepId = salesRepId;
     }
 
     @Override
