@@ -1,11 +1,10 @@
 package com.ironhack.Homework3;
 
+import com.ironhack.Homework3.enums.Industry;
 import com.ironhack.Homework3.enums.Product;
 import com.ironhack.Homework3.enums.Status;
-import com.ironhack.Homework3.models.Account;
-import com.ironhack.Homework3.models.Lead;
-import com.ironhack.Homework3.models.Opportunity;
-import com.ironhack.Homework3.models.SalesRep;
+import com.ironhack.Homework3.models.*;
+import com.ironhack.Homework3.repositories.AccountRepository;
 import com.ironhack.Homework3.repositories.LeadRepository;
 import com.ironhack.Homework3.repositories.OpportunityRepository;
 import com.ironhack.Homework3.repositories.SalesRepRepository;
@@ -34,6 +33,7 @@ public class SalesRepRepositoryTest {
     List<Lead> leadList;
     List<Lead> leadList2;
     List<Opportunity> opportunityList;
+    List<Contact> contactList;
     @Autowired
     OpportunityRepository opportunityRepository;
 
@@ -42,21 +42,25 @@ public class SalesRepRepositoryTest {
 
     @Autowired
     SalesRepRepository salesRepRepository;
+    @Autowired
+    AccountRepository accountRepository;
 
     @BeforeEach
     void setUp(){
         leadList = new ArrayList<>();
         opportunityList = new ArrayList<>();
-        //account = new Account();
+        contactList = new ArrayList<>();
 
 
         salesRep = salesRepRepository.save(new SalesRep(1L,"Jaume",leadList,opportunityList));
         lead = leadRepository.save(new Lead("Quim",999888777,"mail@mail.com","Patata",salesRep));
         lead2 = leadRepository.save(new Lead("Quim2",999888777,"mail@mail.com","Patata",salesRep));
         lead3 = leadRepository.save(new Lead("Quim3",999888777,"mail@mail.com","Patata"));
-        //opportunity = opportunityRepository.save(new Opportunity(20L, Product.BOX, Utilities.newContact(lead), account, salesRep));
+        contactList.add(Utilities.newContact(lead));
+        account = accountRepository.save(new Account(Industry.ECOMMERCE,200L,"BCN","ESP",contactList,opportunityList));
+        opportunity = opportunityRepository.save(new Opportunity(20L, Product.BOX, Utilities.newContact(lead), account, salesRep));
 
-        //opportunityList.add(opportunity);
+        opportunityList.add(opportunity);
         leadList.add(lead);
         leadList.add(lead2);
 

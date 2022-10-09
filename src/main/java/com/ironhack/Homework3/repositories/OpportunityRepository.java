@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface OpportunityRepository extends JpaRepository<Opportunity, Long> {
 /*
@@ -39,5 +41,24 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
             @Query("Select count(id) From Opportunity where status like "CLOSED_WON" group by product)
                     List<Object[]> findCountByProduct();
 
+        @Query("SELECT sr.name, COUNT(o) FROM SalesRep sr JOIN sr.opportunities o GROUP BY sr.name")
+    List<Object[]> countOpportunitiesBySalesRep();
+
 */
+    //Queries grouped by COUNTRY
+    @Query("SELECT a.country, COUNT(op) FROM Opportunity op JOIN op.accountId a GROUP BY a.country")
+    List<Object[]> countOpportunitiesByCountry();
+
+    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status LIKE 0 GROUP BY a.country")
+    List<Object[]> countOpportunitiesByCountryWhereStatusLikeOpen();
+
+    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status LIKE 1 GROUP BY a.country")
+    List<Object[]> countOpportunitiesByCountryWhereStatusLikeWon();
+
+    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status LIKE 2 GROUP BY a.country")
+    List<Object[]> countOpportunitiesByCountryWhereStatusLikeLost();
+
+    //Queries grouped by PRODUCT
+
+
 }
