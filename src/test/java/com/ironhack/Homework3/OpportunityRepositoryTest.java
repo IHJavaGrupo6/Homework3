@@ -90,6 +90,7 @@ public class OpportunityRepositoryTest {
 
     }
 
+    //Tests Opp grouped by Country
     @Test
     @DisplayName("Count Opportunities Grouped by Country works ok")
     void countOpportunitiesByCountry_works_Ok(){
@@ -129,5 +130,45 @@ public class OpportunityRepositoryTest {
         Assertions.assertEquals("CLOSED_LOST",optionalList.get(0)[0].toString());
         Assertions.assertEquals("1",optionalList.get(0)[1].toString());
         Assertions.assertEquals("FRA",optionalList.get(0)[2].toString());
+    }
+
+    //Tests Opp grouped by Product
+    @Test
+    @DisplayName("Count Opportunities Grouped by Product works Ok")
+    void countOpportunitiesByProduct_works_Ok(){
+        List<Object[]> optionalList = opportunityRepository.countOpportunitiesByProduct();
+        Assertions.assertEquals("BOX",optionalList.get(0)[0].toString());
+        Assertions.assertEquals("2",optionalList.get(0)[1].toString());
+        Assertions.assertEquals("FLATBED",optionalList.get(1)[0].toString());
+        Assertions.assertEquals("1",optionalList.get(1)[1].toString());
+        Assertions.assertEquals("HYBRID",optionalList.get(2)[0].toString());
+        Assertions.assertEquals("1",optionalList.get(2)[1].toString());
+    }
+
+    @Test
+    @DisplayName("Count Opportunities Grouped by Product Where Status=Open works Ok")
+    void countOpportunitiesByProductWhereStatusLikeOpen_works_Ok(){
+        List<Object[]> optionalList = opportunityRepository.countOpportunitiesByProductWhereStatusLikeOpen();
+        Assertions.assertEquals("OPEN",optionalList.get(0)[0].toString());
+        Assertions.assertEquals("2",optionalList.get(0)[1].toString());
+        Assertions.assertEquals("BOX",optionalList.get(0)[2].toString());
+    }
+
+    @Test
+    @DisplayName("Count Opportunities Grouped by Product Where Status=Won works Ok")
+    void countOpportunitiesByProductWhereStatusLikeWon_works_Ok(){
+        List<Object[]> optionalList = opportunityRepository.countOpportunitiesByProductWhereStatusLikeWon();
+        Assertions.assertEquals("CLOSED_WON",optionalList.get(0)[0].toString());
+        Assertions.assertEquals("1",optionalList.get(0)[1].toString());
+        Assertions.assertEquals("FLATBED",optionalList.get(0)[2].toString());
+    }
+
+    @Test
+    @DisplayName("Count Opportunities Grouped by Product Where Status=Lost works Ok")
+    void countOpportunitiesByProductWhereStatusLikeLost_works_Ok(){
+        List<Object[]> optionalList = opportunityRepository.countOpportunitiesByProductWhereStatusLikeLost();
+        Assertions.assertEquals("CLOSED_LOST",optionalList.get(0)[0].toString());
+        Assertions.assertEquals("1",optionalList.get(0)[1].toString());
+        Assertions.assertEquals("HYBRID",optionalList.get(0)[2].toString());
     }
 }

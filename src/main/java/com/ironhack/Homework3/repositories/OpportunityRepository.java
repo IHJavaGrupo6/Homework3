@@ -59,6 +59,16 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     List<Object[]> countOpportunitiesByCountryWhereStatusLikeLost();
 
     //Queries grouped by PRODUCT
+    @Query("SELECT op.product, COUNT(op) FROM Opportunity op GROUP BY op.product")
+    List<Object[]> countOpportunitiesByProduct();
 
+    @Query("SELECT op.status, COUNT(op), op.product FROM Opportunity op WHERE op.status LIKE 0 GROUP BY op.product")
+    List<Object[]> countOpportunitiesByProductWhereStatusLikeOpen();
+
+    @Query("SELECT op.status, COUNT(op), op.product FROM Opportunity op WHERE op.status LIKE 1 GROUP BY op.product")
+    List<Object[]> countOpportunitiesByProductWhereStatusLikeWon();
+
+    @Query("SELECT op.status, COUNT(op), op.product FROM Opportunity op WHERE op.status LIKE 2 GROUP BY op.product")
+    List<Object[]> countOpportunitiesByProductWhereStatusLikeLost();
 
 }
