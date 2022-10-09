@@ -15,8 +15,10 @@ public interface LeadRepository extends JpaRepository<Lead, Long> {
     //A count of Leads by SalesRep
     @Query("Select count(name) From Leads group by salesRep")
     List<Name[]> FindCountByNameLeads();
+    */
 
-*/
+
+
 
 
 }

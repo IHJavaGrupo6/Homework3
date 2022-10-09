@@ -20,6 +20,14 @@ public class Lead {
     public Lead() {
     }
 
+    public Lead(String name, long phoneNumber, String email, String companyName, SalesRep salesRepId) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.companyName = companyName;
+        this.salesRepId = salesRepId;
+    }
+
     public Lead(String name, long phoneNumber, String email, String companyName) {
         setName(name);
         setPhoneNumber(phoneNumber);
