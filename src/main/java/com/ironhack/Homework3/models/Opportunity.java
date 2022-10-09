@@ -3,29 +3,37 @@ package com.ironhack.Homework3.models;
 import com.ironhack.Homework3.enums.Product;
 import com.ironhack.Homework3.enums.Status;
 
+import javax.persistence.*;
+
+@Entity
 public class Opportunity {
-    private final int id;
-    private static int counter3 = 0;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private long quantity;
     private Product product;
     private Status status;
-
+    @Embedded
     private Contact decisionMaker;
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account accountId;
+    @ManyToOne
+    @JoinColumn(name = "sales_rep_id")
+    private SalesRep salesRepId;
 
     public Opportunity() {
-        this.id = counter3++;
         setStatus(Status.OPEN);
     }
 
     public Opportunity(String product, long quantity, Contact decisionMaker) {
-        this.id = counter3++;
         setProduct(product);
         setQuantity(quantity);
         setStatus(Status.OPEN);
         setDecisionMaker(decisionMaker);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -66,6 +74,22 @@ public class Opportunity {
 
     public void setDecisionMaker(Contact decisionMaker) {
         this.decisionMaker = decisionMaker;
+    }
+
+    public SalesRep getSalesRepId() {
+        return salesRepId;
+    }
+
+    public void setSalesRepId(SalesRep salesRepId) {
+        this.salesRepId = salesRepId;
+    }
+
+    public Account getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Account accountId) {
+        this.accountId = accountId;
     }
 
     @Override

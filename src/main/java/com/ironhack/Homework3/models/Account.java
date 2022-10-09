@@ -2,49 +2,52 @@ package com.ironhack.Homework3.models;
 
 import com.ironhack.Homework3.enums.Industry;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Entity
 public class Account {
-    private final int id;
-    private static int counter = 0;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Industry industry;
     private long employeeCount;
     private String city;
     private String country;
-    private List<Contact> contactList = new ArrayList<>();
-    private List<Opportunity> opportunityList = new ArrayList<>();
+    @ElementCollection
+    private List<Contact> contacts;
+    @OneToMany(mappedBy = "accountId")
+    private List<Opportunity> opportunities;
 
     public Account() {
-        this.id = counter++;
     }
 
     //  Constructor with empty contact list and opportunity list
     public Account(String industry, long employeeCount, String city, String country) {
-        this.id = counter++;
         setIndustry(industry);
         setEmployeeCount(employeeCount);
         setCity(city);
         setCountry(country);
-        contactList = new ArrayList<>();
-        opportunityList = new ArrayList<>();
+        contacts = new ArrayList<>();
+        opportunities = new ArrayList<>();
     }
 
     //  Constructor with adding a contact and an opportunity to the lists
     public Account(String industry, long employeeCount, String city, String country, Contact contact, Opportunity opportunity) {
-        this.id = counter++;
         setIndustry(industry);
         setEmployeeCount(employeeCount);
         setCity(city);
         setCountry(country);
-        contactList.add(contact);
-        opportunityList.add(opportunity);
+        contacts.add(contact);
+        opportunities.add(opportunity);
     }
 
     //  Getters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -64,13 +67,13 @@ public class Account {
         return country;
     }
 
-    public List<Contact> getContactList() {
+    public List<Contact> getContacts() {
 
-        return contactList;
+        return contacts;
     }
 
-    public List<Opportunity> getOpportunityList() {
-        return opportunityList;
+    public List<Opportunity> getOpportunities() {
+        return opportunities;
     }
 
     //  Setters
@@ -119,6 +122,6 @@ public class Account {
     @Override
     public String toString() {
         return "Account: id = " + id + ", industry= " + industry + ", employeeCount= " + employeeCount + ", city= " + city + ", country= " + country +
-                "\n Contact List \n" + contactList + "\n Opportunity List \n" + opportunityList;
+                "\n Contact List \n" + contacts + "\n Opportunity List \n" + opportunities;
     }
 }

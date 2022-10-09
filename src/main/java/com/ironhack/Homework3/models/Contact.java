@@ -1,23 +1,25 @@
 package com.ironhack.Homework3.models;
 
+import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Embeddable
 public class Contact{
-    private static int counter2 = 0;
-    private final int id2;
     private String name;
     private long phoneNumber;
     private String email;
     private String companyName;
 
+    public Contact() {
+    }
+
     public Contact(String name, long phoneNumber, String email, String companyName) {
-        this.id2 = counter2++;
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setCompanyName(companyName);
-    }
-
-    public int getId2() {
-        return id2;
     }
 
     public String getName() {
@@ -54,7 +56,7 @@ public class Contact{
 
     @Override
     public String toString() {
-        return "Contact: id = " + getId2() + ", name = " + getName() + ", phoneNumber = " + getPhoneNumber() +
+        return "Contact: name = " + getName() + ", phoneNumber = " + getPhoneNumber() +
                 ", email = " + getEmail() + ", companyName = " + getCompanyName() + "\n";
     }
 }
