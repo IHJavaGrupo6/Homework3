@@ -2,6 +2,7 @@ package com.ironhack.Homework3.models;
 
 import com.ironhack.Homework3.enums.Product;
 import com.ironhack.Homework3.enums.Status;
+import lombok.AllArgsConstructor;
 
 import javax.persistence.*;
 
@@ -21,6 +22,15 @@ public class Opportunity {
     @ManyToOne
     @JoinColumn(name = "sales_rep_id")
     private SalesRep salesRepId;
+
+    public Opportunity(long quantity, Product product, Contact decisionMaker, Account accountId, SalesRep salesRepId) {
+        this.quantity = quantity;
+        this.product = product;
+        this.status = Status.OPEN;
+        this.decisionMaker = decisionMaker;
+        this.accountId = accountId;
+        this.salesRepId = salesRepId;
+    }
 
     public Opportunity() {
         setStatus(Status.OPEN);

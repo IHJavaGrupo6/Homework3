@@ -26,6 +26,8 @@ public class Account {
     public Account() {
     }
 
+
+
     //  Constructor with empty contact list and opportunity list
     public Account(String industry, long employeeCount, String city, String country) {
         setIndustry(industry);

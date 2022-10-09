@@ -39,5 +39,8 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
             //A count of all CLOSED_LOST Opportunities
             @Query("Select count(id) From Opportunity where status like "CLOSED_WON" group by product)
                     List<Object[]>findCountByProduct();
-                    */
+
+                    List<Object[]> findCountByProduct();
+
+*/
 }
