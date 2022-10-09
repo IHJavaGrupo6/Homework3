@@ -35,9 +35,15 @@ build/
 <<<<<<< HEAD
 
 ## Application properties ##
+!.src/main/resources/application.properties
+=======
+<<<<<<< HEAD
+
+## Application properties ##
 application.properties
 src/main/resources/application.properties
 .properties
 =======
 !.src/main/resources/application.properties
 >>>>>>> 03e36062cf66af141dab33eb5f4fe8e155555c60
+>>>>>>> 2b66c5409fb3095256d650c2f76cbe5c5b25f2a0
