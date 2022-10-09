@@ -1,11 +1,15 @@
 package com.ironhack.Homework3;
 
+import com.ironhack.Homework3.enums.Product;
+import com.ironhack.Homework3.enums.Status;
+import com.ironhack.Homework3.models.Account;
 import com.ironhack.Homework3.models.Lead;
 import com.ironhack.Homework3.models.Opportunity;
 import com.ironhack.Homework3.models.SalesRep;
 import com.ironhack.Homework3.repositories.LeadRepository;
 import com.ironhack.Homework3.repositories.OpportunityRepository;
 import com.ironhack.Homework3.repositories.SalesRepRepository;
+import com.ironhack.Homework3.utilities.Utilities;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,10 +24,13 @@ import java.util.List;
 public class SalesRepRepositoryTest {
     SalesRep salesRep;
     SalesRep salesRep2;
-
     Lead lead;
     Lead lead2;
     Lead lead3;
+    Opportunity opportunity;
+    Opportunity opportunity2;
+
+    Account account;
     List<Lead> leadList;
     List<Lead> leadList2;
     List<Opportunity> opportunityList;
@@ -40,13 +47,16 @@ public class SalesRepRepositoryTest {
     void setUp(){
         leadList = new ArrayList<>();
         opportunityList = new ArrayList<>();
+        //account = new Account();
 
 
         salesRep = salesRepRepository.save(new SalesRep(1L,"Jaume",leadList,opportunityList));
         lead = leadRepository.save(new Lead("Quim",999888777,"mail@mail.com","Patata",salesRep));
         lead2 = leadRepository.save(new Lead("Quim2",999888777,"mail@mail.com","Patata",salesRep));
         lead3 = leadRepository.save(new Lead("Quim3",999888777,"mail@mail.com","Patata"));
+        //opportunity = opportunityRepository.save(new Opportunity(20L, Product.BOX, Utilities.newContact(lead), account, salesRep));
 
+        //opportunityList.add(opportunity);
         leadList.add(lead);
         leadList.add(lead2);
 
