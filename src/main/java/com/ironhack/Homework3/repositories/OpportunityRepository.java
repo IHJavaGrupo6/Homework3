@@ -1,4 +1,4 @@
-package repositories;
+package com.ironhack.Homework3.repositories;
 
 import com.ironhack.Homework3.models.Opportunity;
 import org.springframework.data.jpa.repository.JpaRepository;
