@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface OpportunityRepository extends JpaRepository<Opportunity, Long> {
-
+/*
     //by SalesRep
     //A count of all Opportunities by SalesRep
     @Query("Select count(id) From Opportunity group by SalesRep")
@@ -39,5 +39,5 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
             @Query("Select count(id) From Opportunity where status like "CLOSED_WON" group by product)
                     List<Object[]> findCountByProduct();
 
-
+*/
 }
