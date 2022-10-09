@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public interface OpportunityRepository extends JpaRepository<Opportunity, Long> {
-
+/*
     //by SalesRep
     //A count of all Opportunities by SalesRep
     @Query("Select count(id) From Opportunity group by SalesRep")
@@ -33,11 +34,10 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
 
     //A count of all CLOSED_WON Opportunities
     @Query("Select count(id) From Opportunity where status like "CLOSED_WON" group by product)
-    List<Object[]> findCountByProduct();
+            List<Object[]>findCountByProduct();
 
-    //A count of all CLOSED_LOST Opportunities
+            //A count of all CLOSED_LOST Opportunities
             @Query("Select count(id) From Opportunity where status like "CLOSED_WON" group by product)
-                    List<Object[]> findCountByProduct();
-
-
+                    List<Object[]>findCountByProduct();
+                    */
 }
