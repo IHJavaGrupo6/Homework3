@@ -24,4 +24,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query("SELECT MIN(employeeCount) FROM Account")
     Long minEmployeeCount();
 
+    //The median employeeCount can be displayed by typing “Median EmployeeCount”
 }
