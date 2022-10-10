@@ -63,6 +63,7 @@ public class AccountRepositoryTest {
         contactList.add(Utilities.newContact(lead));
         account = accountRepository.save(new Account(Industry.ECOMMERCE, 200L, "BCN", "ESP", contactList, opportunityList));
         account2 = accountRepository.save(new Account(Industry.ECOMMERCE, 400L, "BCN", "FRA", contactList, opportunityList2));
+        Account account3 = accountRepository.save(new Account(Industry.ECOMMERCE, 300L, "BCN", "FRA", contactList, opportunityList2));
         opportunity = opportunityRepository.save(new Opportunity(20L, Product.BOX, Utilities.newContact(lead), account, salesRep));
         opportunity2 = opportunityRepository.save(new Opportunity(50L, Product.BOX, Utilities.newContact(lead), account, salesRep));
         opportunity3 = new Opportunity(30L, Product.FLATBED, Utilities.newContact(lead), account2, salesRep);
@@ -110,5 +111,12 @@ public class AccountRepositoryTest {
     void minEmployeeCount_works() {
         Long employee = accountRepository.minEmployeeCount();
         Assertions.assertEquals(200, employee);
+    }
+    @Test
+    @DisplayName("Median of employeeCount")
+    void medianEmployeeCount_works() {
+        Long employee = accountRepository.medianEmployeeCount();
+        System.out.println(employee);
+        //Assertions.assertEquals(300, employee);
     }
 }

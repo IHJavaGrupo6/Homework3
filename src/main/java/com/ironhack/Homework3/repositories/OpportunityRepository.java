@@ -56,4 +56,6 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     //The minimum number of Opportunities associated with an Account can be displayed by typing “Min Opps per Account”
     @Query(value = "SELECT MIN(opportunity.opp) FROM (SELECT COUNT(account_id) as opp FROM homework3.opportunity GROUP BY opportunity.account_id) as opportunity", nativeQuery = true)
     Long minOpportunitiesAccount();
+
+    //The median number of Opportunities associated with an Account can be displayed by typing “Median Opps per Account”
 }
