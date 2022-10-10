@@ -18,10 +18,10 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     //The maximum employeeCount can be displayed by typing “Max EmployeeCount”
     @Query("SELECT MAX(employeeCount) FROM Account")
-    Long maxEmployeCount();
+    Long maxEmployeeCount();
 
     //The minimum employeeCount can be displayed by typing “Min EmployeeCount”
     @Query("SELECT MIN(employeeCount) FROM Account")
-    Long minEmployeCount();
+    Long minEmployeeCount();
 
 }

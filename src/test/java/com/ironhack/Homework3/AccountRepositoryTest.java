@@ -101,14 +101,14 @@ public class AccountRepositoryTest {
     @Test
     @DisplayName("Max of employeeCount")
     void maxEmployeeCount_works() {
-        Long employee = accountRepository.maxEmployeCount();
+        Long employee = accountRepository.maxEmployeeCount();
         Assertions.assertEquals(400, employee);
     }
 
     @Test
     @DisplayName("Min of employeeCount")
     void minEmployeeCount_works() {
-        Long employee = accountRepository.minEmployeCount();
+        Long employee = accountRepository.minEmployeeCount();
         Assertions.assertEquals(200, employee);
     }
 }
