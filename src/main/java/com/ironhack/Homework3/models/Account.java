@@ -1,6 +1,8 @@
 package com.ironhack.Homework3.models;
 
 import com.ironhack.Homework3.enums.Industry;
+import com.sun.istack.NotNull;
+import lombok.NonNull;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,8 +14,10 @@ import java.util.regex.Pattern;
 public class Account {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Enumerated(EnumType.STRING)
     private Industry industry;
     private long employeeCount;
     private String city;
@@ -25,8 +29,6 @@ public class Account {
 
     public Account() {
     }
-
-
 
     //  Constructor with empty contact list and opportunity list
     public Account(String industry, long employeeCount, String city, String country) {
@@ -46,6 +48,16 @@ public class Account {
         setCountry(country);
         contacts.add(contact);
         opportunities.add(opportunity);
+    }
+
+    // Constructor using a list of contacts and a list of opportunities
+    public Account(Industry industry, long employeeCount, String city, String country, List<Contact> contacts, List<Opportunity> opportunities) {
+        this.industry = industry;
+        this.employeeCount = employeeCount;
+        this.city = city;
+        this.country = country;
+        this.contacts = contacts;
+        this.opportunities = opportunities;
     }
 
     //  Getters
@@ -125,5 +137,9 @@ public class Account {
     public String toString() {
         return "Account: id = " + id + ", industry= " + industry + ", employeeCount= " + employeeCount + ", city= " + city + ", country= " + country +
                 "\n Contact List \n" + contacts + "\n Opportunity List \n" + opportunities;
+    }
+
+    public void setOpportunities(List<Opportunity> opportunities) {
+        this.opportunities = opportunities;
     }
 }

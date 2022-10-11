@@ -8,36 +8,23 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface OpportunityRepository extends JpaRepository<Opportunity, Long> {
-/*
-    //by SalesRep
-    //A count of all Opportunities by SalesRep
-    @Query("Select count(id) From Opportunity group by SalesRep")
-    List<Object[]> findCountBySalesRep();
 
-    //A count of CLOSED_WON Opportunities by SalesRep
-    @Query("Select count(id) From Opportunity where status like "CLOSED_WON"")
-    List<Object[]> findCountByStatus("CLOSED_WON");
+    /*
+    // A count of all Opportunities by industry can be displayed by typing “Report Opportunity by Industry”
+    List<Object[]> countByAccountIdIndustry();
 
-    //A count of CLOSED_LOST Opportunities by SalesRep
-    @Query("Select count(id) From Opportunity where status like "CLOSED_LOST"")
-    List<Object[]> findCountByStatus("CLOSED_LOST");
+    // A count of all CLOSED_WON Opportunities by industry can be displayed by typing “Report CLOSED-WON by Industry”
+    @Query("SELECT a.industry, count(o) FROM Account a JOIN a.opportunities o WHERE o.status LIKE 'CLOSED-WON' GROUP BY a.industry")
+    List<Object[]> countClosedWonOpportunitiesByIndustry();
 
-    //A count of OPEN Opportunities by SalesRep
-    @Query("Select count(id) From Opportunity where status like "OPEN"")
-    List<Object[]> findCountByStatus("OPEN");
+    // A count of all CLOSED_LOST Opportunities by industry can be displayed by typing “Report CLOSED-LOST by Industry”
+    @Query("SELECT a.industry, count(o) FROM Account a JOIN a.opportunities o WHERE o.status LIKE 'CLOSED-LOST' GROUP BY a.industry")
+    List<Object[]> countClosedLostOpportunitiesByIndustry();
 
-    //by Product
-    //A count of all Opportunities by the product
-    @Query("Select count(id) From Opportunity group by product")
-    List<Object[]> findCountByProduct();
+    // A count of all OPEN Opportunities by industry can be displayed by typing “Report OPEN by Industry”
+    @Query("SELECT a.industry, count(o) FROM Account a JOIN a.opportunities o WHERE o.status LIKE 'OPEN' GROUP BY a.industry")
+    List<Object[]> countOpenOpportunitiesByIndustry();
 
-    //A count of all CLOSED_WON Opportunities
-    @Query("Select count(id) From Opportunity where status like "CLOSED_WON" group by product)
-    List<Object[]> findCountByProduct();
+    */
 
-    //A count of all CLOSED_LOST Opportunities
-            @Query("Select count(id) From Opportunity where status like "CLOSED_WON" group by product)
-                    List<Object[]> findCountByProduct();
-
-*/
 }
