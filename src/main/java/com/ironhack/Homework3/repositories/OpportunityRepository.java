@@ -3,7 +3,6 @@ package com.ironhack.Homework3.repositories;
 import com.ironhack.Homework3.models.Opportunity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -43,8 +42,10 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
 
                     List<Object[]> findCountByProduct();
 
-*/
+        @Query("SELECT sr.name, COUNT(o) FROM SalesRep sr JOIN sr.opportunities o GROUP BY sr.name")
+    List<Object[]> countOpportunitiesBySalesRep();
 
+*/
     //Queries grouped by COUNTRY
     @Query("SELECT a.country, COUNT(op) FROM Opportunity op JOIN op.accountId a GROUP BY a.country")
     List<Object[]> countOpportunitiesByCountry();
