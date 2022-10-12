@@ -18,16 +18,15 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
       //      SELECT  Opportunity.quantity AS 'mid_vals' FROM ("SELECT @row:=@row+1 AS 'row', ))")
 
     //The maximum quantity of products order
-    @Query("SELECT MAX(quantity) FROM Opportunity");
+    @Query("SELECT MAX(quantity) FROM Opportunity")
     List<Object[]> maxQuantityOfProducts();
 
     //The minimum quantity of products order
-    @Query("SELECT MIN(quantity) FROM Opportunity");
+    @Query("SELECT MIN(quantity) FROM Opportunity")
     List<Object[]> minQuantityOfProducts();
 
 }
 /*
-
 SELECT AVG(mid_vals) AS 'median' FROM (
  SELECT tab1.MyNumber AS 'mid_vals' FROM
   (
@@ -40,4 +39,5 @@ SELECT AVG(mid_vals) AS 'median' FROM (
    FROM dataset x
   ) AS tab2
   WHERE tab1.row >= tab2.count/2 and tab1.row <= ((tab2.count/2) +1)) AS tab3;
-}
+  }
+ */
