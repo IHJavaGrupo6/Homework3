@@ -12,7 +12,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class SalesRep {
     @Id
@@ -24,4 +23,16 @@ public class SalesRep {
     private List<Lead> leads;
     @OneToMany(mappedBy = "salesRepId")
     private List<Opportunity> opportunities;
+
+    public SalesRep(String name, List<Lead> leads, List<Opportunity> opportunities) {
+        this.name = name;
+        this.leads = leads;
+        this.opportunities = opportunities;
+    }
+
+    @Override
+    public String toString() {
+        return "SalesRep: id = " + getId() + ", name = " + name +
+                "\n Leads List \n" + leads + "\n Opportunity List \n" + opportunities;
+    }
 }

@@ -1,23 +1,37 @@
 package com.ironhack.Homework3.utilities;
 
 import com.ironhack.Homework3.enums.Status;
-import com.ironhack.Homework3.models.Account;
-import com.ironhack.Homework3.models.Contact;
-import com.ironhack.Homework3.models.Lead;
-import com.ironhack.Homework3.models.Opportunity;
+import com.ironhack.Homework3.models.*;
+import com.ironhack.Homework3.repositories.AccountRepository;
+import com.ironhack.Homework3.repositories.LeadRepository;
+import com.ironhack.Homework3.repositories.OpportunityRepository;
+import com.ironhack.Homework3.repositories.SalesRepRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
 import static com.ironhack.Homework3.utilities.Utilities.*;
 import static java.lang.Integer.parseInt;
-import static java.lang.Long.parseLong;
+
 
 public class Menu {
+    @Autowired
 
-    private static Scanner input;
+    AccountRepository accountRepository;
+    @Autowired
+
+    LeadRepository leadRepository;
+    @Autowired
+
+    OpportunityRepository opportunityRepository;
+    @Autowired
+
+    SalesRepRepository salesRepRepository;
+
+    private  Scanner input;
 
 
-    public static void mainMenu() {
+    public  void mainMenu() {
         System.out.println("=========");
         System.out.println("\033[0;1mMAIN MENU\033[0;0m");
         System.out.println("\033[0;1mAvailable commands: \033[0;0m");
@@ -42,7 +56,7 @@ public class Menu {
         }
     }
 
-    public static void getMethodInput() {
+    public  void getMethodInput() {
         input = new Scanner(System.in);
         String methodAndId = input.nextLine().toLowerCase().replaceAll("\\W+", "");
         if (methodAndId.isBlank()) {
@@ -68,7 +82,9 @@ public class Menu {
                         String mail = getAnswer("Please enter an email for the new lead: ");
                         if (!Utilities.validate(mail)) throw new IllegalArgumentException("Invalid email format");
                         String company = getAnswer("Please enter the name of the company for the new lead: ");
-                        lead = newLead(name, number, mail, company);
+                        Long salesRepId = getNumber("Please enter the id of the associated SalesRep: ");
+                        if(!salesRepRepository.existsById(salesRepId)) System.out.println("NO ESTA");
+                        lead = newLead(name, number, mail, company,salesRepRepository.getReferenceById(salesRepId));
                         repeatLead = false;
                     } catch (IllegalArgumentException e) {
                         System.err.println(e.getMessage());
@@ -76,6 +92,8 @@ public class Menu {
                     }
                 }
                 Utilities.getLeadMap().put(lead.getId(), lead);
+                leadRepository.save(lead);
+
                 mainMenu();
             case "showleads":
                 try {
@@ -130,12 +148,22 @@ public class Menu {
                 }
                 mainMenu();
             case "newsalesrep":
-                try {
-
-                } catch (IllegalArgumentException e) {
-                    backToMainMenu(e);
+                SalesRep salesRep = null;
+                boolean repeatSalesRep = true;
+                while (repeatSalesRep) {
+                    try {
+                        String name = getAnswer("Please enter the name of the new SalesRep: ");
+                        salesRep = newSalesRep(name);
+                        repeatSalesRep = false;
+                    } catch (IllegalArgumentException e) {
+                        System.err.println(e.getMessage());
+                        System.err.println("Going back to new SalesRep creation");
+                    }
                 }
+                Utilities.getTotalSalesReps().add(salesRep);
+
                 mainMenu();
+
             case "createreports":
                 try {
                     ReportFeatures.repMenu();
@@ -149,5 +177,10 @@ public class Menu {
             default:
                 throw new IllegalArgumentException("No such command found. Please enter a valid command!");
         }
+    }
+    public  void backToMainMenu(Exception e) {
+        System.err.println(e.getMessage());
+        System.err.println("Going back to the main menu.");
+        mainMenu();
     }
 }
