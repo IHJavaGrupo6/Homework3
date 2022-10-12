@@ -22,9 +22,9 @@ public interface LeadRepository extends JpaRepository<Lead, Long> {
     */
 
 
->>>>>>> 1cfb4acdffdf7ded8caae6d8984ec33fa7e77c33
 
-Integer countBySalesRep
+
+
 
 
 }

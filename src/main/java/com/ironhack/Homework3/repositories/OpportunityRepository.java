@@ -8,36 +8,33 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface OpportunityRepository extends JpaRepository<Opportunity, Long> {
+
+    //The mean quantity of products order can be displayed
+    @Query("SELECT AVG(quantity) FROM Opportunity ")
+
+    //the median quantity of products order
+    @Query("SELECT AVG(mid_vals) as 'median' FROM (
+            SELECT  Opportunity.qua)")
+
+    //The maximum quantity of products order
+    @Query("SELECT MAX(quantity) FROM Opportunity")
+
+    //The minimum quantity of products order
+    @Query("SELECT MIN(quantity) FROM Opportunity")
+
+}
 /*
-    //by SalesRep
-    //A count of all Opportunities by SalesRep
-   // @Query("Select count(id) From Opportunity group by SalesRep")
-  //  List<Object[]> findCountBySalesRep();
 
-    //A count of CLOSED_WON Opportunities by SalesRep
-   // @Query("Select count(id) From Opportunity where status like "CLOSED_WON"")
-   // List<Object[]> findCountByStatus("CLOSED_WON");
-
-    //A count of CLOSED_LOST Opportunities by SalesRep
-   // @Query("Select count(id) From Opportunity where status like "CLOSED_LOST"")
-  //  List<Object[]> findCountByStatus("CLOSED_LOST");
-
-    //A count of OPEN Opportunities by SalesRep
-  //  @Query("Select count(id) From Opportunity where status like "OPEN"")
-    //List<Object[]> findCountByStatus("OPEN");
-
-    //by Product
-    //A count of all Opportunities by the product
-  //  @Query("Select count(id) From Opportunity group by product")
-  //  List<Object[]> findCountByProduct();
-
-    //A count of all CLOSED_WON Opportunities
-   // @Query("Select count(id) From Opportunity where status like "CLOSED_WON" group by product)
-   // List<Object[]> findCountByProduct();
-
-    //A count of all CLOSED_LOST Opportunities
-//            @Query("Select count(id) From Opportunity where status like "CLOSED_WON" group by product)
-//                    List<Object[]> findCountByProduct();
-
-*/
+SELECT AVG(mid_vals) AS 'median' FROM (
+ SELECT tab1.MyNumber AS 'mid_vals' FROM
+  (
+   SELECT @row:=@row+1 AS 'row', a.MyNumber
+   FROM dataset AS a, (SELECT @row:=0) AS r
+   ORDER BY a.MyNumber
+  ) AS tab1,
+  (
+   SELECT COUNT(*) as 'count'
+   FROM dataset x
+  ) AS tab2
+  WHERE tab1.row >= tab2.count/2 and tab1.row <= ((tab2.count/2) +1)) AS tab3;
 }
