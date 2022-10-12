@@ -12,13 +12,13 @@ public class Opportunity {
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long quantity;
     @Enumerated(EnumType.STRING)
     private Product product;
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private long quantity;
     @Embedded
     private Contact decisionMaker;
+    @Enumerated(EnumType.STRING)
+    private Status status;
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account accountId;
@@ -26,24 +26,46 @@ public class Opportunity {
     @JoinColumn(name = "sales_rep_id")
     private SalesRep salesRepId;
 
-    public Opportunity(long quantity, Product product, Contact decisionMaker, Account accountId, SalesRep salesRepId) {
-        this.quantity = quantity;
-        this.product = product;
-        this.status = Status.OPEN;
-        this.decisionMaker = decisionMaker;
-        this.accountId = accountId;
-        this.salesRepId = salesRepId;
-    }
-
     public Opportunity() {
         setStatus(Status.OPEN);
     }
 
-    public Opportunity(String product, long quantity, Contact decisionMaker) {
+//    public Opportunity(String product, long quantity, Contact decisionMaker) {
+//        setProduct(product);
+//        setQuantity(quantity);
+//        setStatus(Status.OPEN);
+//        setDecisionMaker(decisionMaker)
+//        ;
+//    }
+
+
+    // Constructor sin account
+    public Opportunity(String product, long quantity, Contact decisionMaker, SalesRep salesRepId) {
         setProduct(product);
         setQuantity(quantity);
-        setStatus(Status.OPEN);
         setDecisionMaker(decisionMaker);
+        this.status = Status.OPEN;
+        setSalesRepId(salesRepId);
+    }
+
+    // Constructor normal
+    public Opportunity(String product, long quantity, Contact decisionMaker, Account accountId, SalesRep salesRepId) {
+        setProduct(product);
+        setQuantity(quantity);
+        setDecisionMaker(decisionMaker);
+        this.status = Status.OPEN;
+        setAccountId(accountId);
+        setSalesRepId(salesRepId);
+    }
+
+    // Constructor para tests! No borrar
+    public Opportunity(long quantity, Product product, Contact decisionMaker, Account accountId, SalesRep salesRepId) {
+        this.product = product;
+        setQuantity(quantity);
+        setDecisionMaker(decisionMaker);
+        this.status = Status.OPEN;
+        setAccountId(accountId);
+        setSalesRepId(salesRepId);
     }
 
     public Long getId() {
@@ -107,7 +129,10 @@ public class Opportunity {
 
     @Override
     public String toString() {
-        return "Opportunity: id = " + id + ", product = " + product + ", trucks quantity = " + quantity + ", status = " + status +
+        return "Opportunity: id = " + id + ", product = " + product + ", trucks quantity = " + quantity + ", status = "
+                + status + ", SalesRep name = " + salesRepId.getName() +
                 "\n Decision maker " + decisionMaker;
     }
+
+
 }

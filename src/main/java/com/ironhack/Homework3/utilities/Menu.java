@@ -12,29 +12,32 @@ import java.util.*;
 
 import static com.ironhack.Homework3.utilities.Utilities.*;
 import static java.lang.Integer.parseInt;
+import static java.lang.Long.parseLong;
 
 
 public class Menu {
 
-    private  Scanner input;
+    private Scanner input;
 
 
-    public  void mainMenu(AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
+    public void mainMenu(AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
         System.out.println("=========");
         System.out.println("\033[0;1mMAIN MENU\033[0;0m");
         System.out.println("\033[0;1mAvailable commands: \033[0;0m");
         System.out.println("\033[0;1m• \u001B[34mNew SalesRep \u001B[0m\033[0;0m");
+        System.out.println("\033[0;1m• \u001B[34mShow SalesReps \u001B[0m\033[0;0m to show the list of existing SalesReps");
+        System.out.println("\u001B[36m    Existing SalesReps: " + salesRepRepository.findAll().size() + "\u001B[0m");
         System.out.println("\033[0;1m• \u001B[34mNew lead \u001B[0m\033[0;0m");
         System.out.println("\033[0;1m• \u001B[34mShow leads \u001B[0m\033[0;0m to show the list of existing leads");
-        System.out.println("\u001B[36m    Existing leads: " + Utilities.getLeadMap().keySet().size() + "\u001B[0m");
+        System.out.println("\u001B[36m    Existing leads: " + leadRepository.findAll().size() + "\u001B[0m");
         System.out.println("\033[0;1m• \u001B[34mLook up lead + id \u001B[0m\033[0;0m to find a lead by its id number and display its info");
         System.out.println("\033[0;1m• \u001B[34mConvert + id \u001B[0m\033[0;0m to find a lead by its id number and convert it into a new opportunity");
         System.out.println("\033[0;1m• \u001B[34mShow opportunities \u001B[0m\033[0;0m to show the list of existing opportunities (both open and closed)");
-        System.out.println("\u001B[36m    Existing opportunities: " + Utilities.getTotalOpportunities().size() + "\u001B[0m");
+        System.out.println("\u001B[36m    Existing opportunities: " + opportunityRepository.findAll().size() + "\u001B[0m");
         System.out.println("\033[0;1m• \u001B[34mLook up opportunity + id \u001B[0m\033[0;0m to find a lead by its id number and display its info");
         System.out.println("\033[0;1m• \u001B[34mClose-Won + id \u001B[0m\033[0;0m to close an oportunity that ended with a sale ");
         System.out.println("\033[0;1m• \u001B[34mClose-Lost + id \u001B[0m\033[0;0m to close a lost oportunity");
-        System.out.println("\033[0;1m• \u001B[34mCreate Reports \u001B[0m\033[0;0m");
+        System.out.println("\033[0;1m• \u001B[34mReport \u001B[0m\033[0;0m to access report features");
         System.out.println("\033[0;1m• \u001B[34mExit \u001B[0m\033[0;0m");
         System.out.println("What do you want to do? ");
         try {
@@ -44,16 +47,16 @@ public class Menu {
         }
     }
 
-    public  void getMethodInput(AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
+    public void getMethodInput(AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
         input = new Scanner(System.in);
         String methodAndId = input.nextLine().toLowerCase().replaceAll("\\W+", "");
         if (methodAndId.isBlank()) {
             throw new IllegalArgumentException("Nothing received. Please enter at valid command!");
         }
         String method = methodAndId.replaceAll("\\d+", "");
-        int id = 0;
+        long id = 0;
         try {
-            id = parseInt(methodAndId.replaceAll("\\D+", ""));
+            id = parseLong(methodAndId.replaceAll("\\D+", ""));
         } catch (NumberFormatException ignored) {
 
         }
@@ -72,14 +75,21 @@ public class Menu {
                         System.err.println("Going back to new SalesRep creation");
                     }
                 }
-                Utilities.getTotalSalesReps().add(salesRep);
+                //Utilities.getTotalSalesReps().add(salesRep);
                 salesRepRepository.save(salesRep);
                 System.out.println(salesRep);
+                mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
+            case "showsalesreps":
+                try {
+                    showSalesReps(salesRepRepository);
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
                 mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
             case "newlead":
                 Lead lead = null;
                 boolean repeatLead = true;
-                if(salesRepRepository.findAll().isEmpty()){
+                if (salesRepRepository.findAll().isEmpty()) {
                     System.err.println("Create a SalesRep first!");
                     mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
                 }
@@ -91,37 +101,36 @@ public class Menu {
                         String mail = getAnswer("Please enter an email for the new lead: ");
                         String company = getAnswer("Please enter the name of the company for the new lead: ");
                         Long salesRepId = getNumber("Please enter the id of the associated SalesRep: ");
-                        lead = newLead(name, number, mail, company,salesRepId,salesRepRepository);
+                        lead = newLead(name, number, mail, company, salesRepId, salesRepRepository);
                         repeatLead = false;
                     } catch (IllegalArgumentException e) {
                         System.err.println(e.getMessage());
                         System.err.println("Going back to new lead creation");
                     }
                 }
-                Utilities.getLeadMap().put(lead.getId(), lead);
+                //Utilities.getLeadMap().put(lead.getId(), lead);
                 leadRepository.save(lead);
                 System.out.println(lead);
                 mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
             case "showleads":
                 try {
-                    showLeads(getLeadMap());
+                    showLeads(leadRepository);
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
                 }
                 mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
             case "lookuplead":
                 try {
-                    System.out.println(Utilities.getLeadMap().get(id).toString());
-                } catch (IllegalArgumentException e) {
+                    System.out.println(leadRepository.findById(id).get());
+                } catch (RuntimeException e) {
                     backToMainMenu(e, accountRepository, leadRepository, opportunityRepository, salesRepRepository);
                 }
-
                 mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
             case "convert":
                 boolean repeatConvertLead = true;
                 while (repeatConvertLead) {
                     try {
-                        convertLead(id);
+                        convertLead(id, leadRepository, opportunityRepository, accountRepository);
                         repeatConvertLead = false;
                     } catch (IllegalArgumentException e) {
                         backToMainMenu(e, accountRepository, leadRepository, opportunityRepository, salesRepRepository);
@@ -129,35 +138,38 @@ public class Menu {
                 }
                 mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
             case "showopportunities":
-                showOpportunities();
+                showOpportunities(opportunityRepository);
                 mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
             case "lookupopportunity":
                 try {
-                    System.out.println(Utilities.getTotalOpportunities().get(id).toString());
+                    System.out.println(opportunityRepository.findById(id).get());
                 } catch (IllegalArgumentException e) {
                     backToMainMenu(e, accountRepository, leadRepository, opportunityRepository, salesRepRepository);
                 }
                 mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
             case "closewon":
                 try {
-                    Utilities.getTotalOpportunities().get(id).setStatus(Status.CLOSED_WON);
-                    System.out.println(Utilities.getTotalOpportunities().get(id));
+                    Opportunity opportunity = opportunityRepository.findById(id).get();
+                    opportunity.setStatus(Status.CLOSED_WON);
+                    opportunityRepository.save(opportunity);
                 } catch (IllegalArgumentException e) {
                     backToMainMenu(e, accountRepository, leadRepository, opportunityRepository, salesRepRepository);
                 }
                 mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
             case "closelost":
                 try {
-                    Utilities.getTotalOpportunities().get(id).setStatus(Status.CLOSED_LOST);
-                    System.out.println(Utilities.getTotalOpportunities().get(id));
+                    Opportunity opportunity = opportunityRepository.findById(id).get();
+                    opportunity.setStatus(Status.CLOSED_LOST);
+                    opportunityRepository.save(opportunity);
+                    System.out.println(opportunityRepository.findById(id).get());
                 } catch (IllegalArgumentException e) {
                     backToMainMenu(e, accountRepository, leadRepository, opportunityRepository, salesRepRepository);
                 }
                 mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
 
-            case "createreports":
+            case "report":
                 try {
-                    ReportFeatures.repMenu();
+                    ReportFeatures.repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
                 } catch (IllegalArgumentException e) {
                     backToMainMenu(e, accountRepository, leadRepository, opportunityRepository, salesRepRepository);
                 }
@@ -169,7 +181,8 @@ public class Menu {
                 throw new IllegalArgumentException("No such command found. Please enter a valid command!");
         }
     }
-    public  void backToMainMenu(Exception e,AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
+
+    public void backToMainMenu(Exception e, AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
         System.err.println(e.getMessage());
         System.err.println("Going back to the main menu.");
         mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);

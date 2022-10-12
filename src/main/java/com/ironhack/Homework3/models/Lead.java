@@ -84,7 +84,7 @@ public class Lead {
 
     @Override
     public String toString() {
-        return "Lead: id = " + getId() + ", name = " + name + ", phoneNumber = " + phoneNumber +
-                ", email = " + email + ", companyName = " + companyName + "\n";
+        return "Lead: id = " + id + ", name = " + name + ", phoneNumber = " + phoneNumber +
+                ", email = " + email + ", companyName = " + companyName + ", SalesRep name = " + salesRepId.getName() + "\n";
     }
 }
