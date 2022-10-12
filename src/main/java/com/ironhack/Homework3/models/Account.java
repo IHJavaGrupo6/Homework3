@@ -15,7 +15,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Industry industry;
-    private long employeeCount;
+    private Long employeeCount;
     private String city;
     private String country;
     @ElementCollection
@@ -26,7 +26,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(Industry industry, long employeeCount, String city, String country, List<Contact> contacts, List<Opportunity> opportunities) {
+    public Account(Industry industry, Long employeeCount, String city, String country, List<Contact> contacts, List<Opportunity> opportunities) {
         this.industry = industry;
         this.employeeCount = employeeCount;
         this.city = city;
@@ -36,7 +36,7 @@ public class Account {
     }
 
     //  Constructor with empty contact list and opportunity list
-    public Account(String industry, long employeeCount, String city, String country) {
+    public Account(String industry, Long employeeCount, String city, String country) {
         setIndustry(industry);
         setEmployeeCount(employeeCount);
         setCity(city);
@@ -46,7 +46,7 @@ public class Account {
     }
 
     //  Constructor with adding a contact and an opportunity to the lists
-    public Account(String industry, long employeeCount, String city, String country, Contact contact, Opportunity opportunity) {
+    public Account(String industry, Long employeeCount, String city, String country, Contact contact, Opportunity opportunity) {
         setIndustry(industry);
         setEmployeeCount(employeeCount);
         setCity(city);
@@ -64,7 +64,7 @@ public class Account {
         return industry;
     }
 
-    public long getEmployeeCount() {
+    public Long getEmployeeCount() {
         return employeeCount;
     }
 
@@ -99,7 +99,7 @@ public class Account {
         }
     }
 
-    public void setEmployeeCount(long employeeCount) {
+    public void setEmployeeCount(Long employeeCount) {
         this.employeeCount = employeeCount;
     }
 
