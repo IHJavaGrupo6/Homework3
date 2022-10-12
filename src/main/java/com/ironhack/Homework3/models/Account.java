@@ -2,7 +2,6 @@ package com.ironhack.Homework3.models;
 
 import com.ironhack.Homework3.enums.Industry;
 import com.sun.istack.NotNull;
-import lombok.NonNull;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class Account {
     private Long id;
     @Enumerated(EnumType.STRING)
     private Industry industry;
-    private long employeeCount;
+    private Long employeeCount;
     private String city;
     private String country;
     @ElementCollection
@@ -27,11 +26,12 @@ public class Account {
     @OneToMany(mappedBy = "accountId")
     private List<Opportunity> opportunities;
 
+    // Constructor empty
     public Account() {
     }
 
     //  Constructor with empty contact list and opportunity list
-    public Account(String industry, long employeeCount, String city, String country) {
+    public Account(String industry, Long employeeCount, String city, String country) {
         setIndustry(industry);
         setEmployeeCount(employeeCount);
         setCity(city);
@@ -40,8 +40,8 @@ public class Account {
         opportunities = new ArrayList<>();
     }
 
-    //  Constructor with adding a contact and an opportunity to the lists
-    public Account(String industry, long employeeCount, String city, String country, Contact contact, Opportunity opportunity) {
+    //  Constructor with adding 1 contact and 1 opportunity to the lists
+    public Account(String industry, Long employeeCount, String city, String country, Contact contact, Opportunity opportunity) {
         setIndustry(industry);
         setEmployeeCount(employeeCount);
         setCity(city);
@@ -69,7 +69,7 @@ public class Account {
         return industry;
     }
 
-    public long getEmployeeCount() {
+    public Long getEmployeeCount() {
         return employeeCount;
     }
 
@@ -104,7 +104,7 @@ public class Account {
         }
     }
 
-    public void setEmployeeCount(long employeeCount) {
+    public void setEmployeeCount(Long employeeCount) {
         this.employeeCount = employeeCount;
     }
 
