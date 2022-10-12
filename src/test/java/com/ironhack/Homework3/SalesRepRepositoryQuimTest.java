@@ -54,7 +54,7 @@ public class SalesRepRepositoryQuimTest {
         contactList = new ArrayList<>();
 
 
-        salesRep = salesRepRepository.save(new SalesRep(1L,"Jaume",leadList,opportunityList));
+        salesRep = salesRepRepository.save(new SalesRep("Jaume",leadList,opportunityList));
         lead = leadRepository.save(new Lead("Quim",999888777,"mail@mail.com","Patata",salesRep));
         lead2 = leadRepository.save(new Lead("Quim2",999888777,"mail@mail.com","Patata",salesRep));
         lead3 = leadRepository.save(new Lead("Quim3",999888777,"mail@mail.com","Patata"));

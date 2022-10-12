@@ -1,15 +1,12 @@
 package com.ironhack.Homework3.utilities;
 
-import com.ironhack.Homework3.models.Account;
-import com.ironhack.Homework3.models.Contact;
-import com.ironhack.Homework3.models.Lead;
-import com.ironhack.Homework3.models.Opportunity;
+import com.ironhack.Homework3.models.*;
+import com.ironhack.Homework3.repositories.SalesRepRepository;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.ironhack.Homework3.utilities.Menu.mainMenu;
 import static java.lang.Long.parseLong;
 
 public class Utilities {
@@ -17,6 +14,7 @@ public class Utilities {
     private static List<Contact> totalContacts = new ArrayList<>();
     private static List<Opportunity> totalOpportunities = new ArrayList<>();
     private static List<Account> totalAccounts = new ArrayList<>();
+    private static List<SalesRep> totalSalesReps = new ArrayList<>();
     public static final Pattern VALID_PHONENUMBER_REGEX =
             Pattern.compile("\\A[0-9]{3}[0-9]{3}[0-9]{3}\\z", Pattern.CASE_INSENSITIVE);
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
@@ -41,12 +39,13 @@ public class Utilities {
         return parseLong(numberString);
     }
 
-    public static Lead newLead(String name, long phoneNumber, String email, String company) {
-        System.out.println("Creating a new lead: ");
+    public static Lead newLead(String name, long phoneNumber, String email, String company, Long salesRepId, SalesRepRepository salesRepRepository) {
+
         if (!validatePhone(String.valueOf(phoneNumber)))
             throw new IllegalArgumentException("Invalid phone format");
         if (!validate(email)) throw new IllegalArgumentException("Invalid email format");
-        Lead lead = new Lead(name, phoneNumber, email, company);
+        if(!salesRepRepository.existsById(salesRepId)) throw new IllegalArgumentException("No SalesRep found with this id");
+        Lead lead = new Lead(name, phoneNumber, email, company, salesRepRepository.getReferenceById(salesRepId));
         System.out.println("New lead created: ");
         System.out.println(lead);
         return lead;
@@ -122,15 +121,19 @@ public class Utilities {
     public static Opportunity newOpportunity(String product, long quantity, Contact contact) {
         Opportunity opportunity = new Opportunity(product, quantity, contact);
         System.out.println("Created a new opportunity: ");
-        System.out.println(opportunity);
         return opportunity;
     }
 
     public static Account newAccount(String industry, long employeeCount, String city, String country, Contact contact, Opportunity opportunity) {
         Account account = new Account(industry, employeeCount, city, country, contact, opportunity);
         System.out.println("Created a new account: ");
-        System.out.println(account);
         return account;
+    }
+    public static SalesRep newSalesRep(String name) {
+        SalesRep salesRep = new SalesRep();
+        salesRep.setName(name);
+        System.out.println("New SalesRep created: ");
+        return salesRep;
     }
 
     public static void showLeads(Map<Long, Lead> leadMap) {
@@ -150,11 +153,7 @@ public class Utilities {
             System.out.println("•" + opportunity.toString());
         }
     }
-    public static void backToMainMenu(Exception e) {
-        System.err.println(e.getMessage());
-        System.err.println("Going back to the main menu.");
-        mainMenu();
-    }
+
 
     public static Map<Long, Lead> getLeadMap() {
         return leadMap;
@@ -188,6 +187,13 @@ public class Utilities {
         Utilities.totalAccounts = totalAccounts;
     }
 
+    public static List<SalesRep> getTotalSalesReps() {
+        return totalSalesReps;
+    }
+
+    public static void setTotalSalesReps(List<SalesRep> totalSalesReps) {
+        Utilities.totalSalesReps = totalSalesReps;
+    }
 
     public static boolean validatePhone(String phoneStr) {
         Matcher matcher = VALID_PHONENUMBER_REGEX.matcher(phoneStr);
