@@ -169,7 +169,7 @@ public class Menu {
 
             case "report":
                 try {
-                    ReportFeatures.repMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
+                    ReportFeatures.repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
                 } catch (IllegalArgumentException e) {
                     backToMainMenu(e, accountRepository, leadRepository, opportunityRepository, salesRepRepository);
                 }
