@@ -48,6 +48,15 @@ public class Account {
         opportunities.add(opportunity);
     }
 
+    public Account(Industry industry, long employeeCount, String city, String country, List<Contact> contacts, List<Opportunity> opportunities) {
+        this.industry = industry;
+        this.employeeCount = employeeCount;
+        this.city = city;
+        this.country = country;
+        this.contacts = contacts;
+        this.opportunities = opportunities;
+    }
+
     //  Getters
     public Long getId() {
         return id;
