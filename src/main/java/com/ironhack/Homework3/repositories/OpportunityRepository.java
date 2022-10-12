@@ -10,41 +10,30 @@ import java.util.List;
 @Repository
 public interface OpportunityRepository extends JpaRepository<Opportunity, Long> {
 
-    /*
-    //by SalesRep
+
+      //by SalesRep
     //A count of all Opportunities by SalesRep
-    @Query("Select count(id) From Opportunity group by SalesRep")
-    List<Object[]> findCountBySalesRep();
+    //dublicate in SalesRepRepository
+    //  @Query("SELECT sr.name, COUNT(o) FROM Opportunity o JOIN o.salesRepId sr GROUP BY o.salesRepId")
+    //  List<Object[]> countOpportunityBySalesRep();
 
-    //A count of CLOSED_WON Opportunities by SalesRep
-    @Query("Select count(id) From Opportunity where status like "CLOSED_WON"")
-    List<Object[]> findCountByStatus("CLOSED_WON");
 
-    //A count of CLOSED_LOST Opportunities by SalesRep
-    @Query("Select count(id) From Opportunity where status like "CLOSED_LOST"")
-    List<Object[]> findCountByStatus("CLOSED_LOST");
+    //The mean quantity of products order can be displayed
+    @Query("SELECT AVG(quantity) FROM Opportunity ")
+    List<Object[]> averageQuantityOfProducts();
 
-    //A count of OPEN Opportunities by SalesRep
-    @Query("Select count(id) From Opportunity where status like "OPEN"")
-    List<Object[]> findCountByStatus("OPEN");
+    //the median quantity of products order
+   // @Query("SELECT AVG(mid_vals) as 'median' FROM ("
+      //      SELECT  Opportunity.quantity AS 'mid_vals' FROM ("SELECT @row:=@row+1 AS 'row', ))")
 
-    //by Product
-    //A count of all Opportunities by the product
-    @Query("Select count(id) From Opportunity group by product")
-    List<Object[]> findCountByProduct();
+    //The maximum quantity of products order
+    @Query("SELECT MAX(quantity) FROM Opportunity")
+    List<Object[]> maxQuantityOfProducts();
 
-    //A count of all CLOSED_WON Opportunities
-    @Query("Select count(id) From Opportunity where status like "CLOSED_WON" group by product)
-            List<Object[]>findCountByProduct();
+    //The minimum quantity of products order
+    @Query("SELECT MIN(quantity) FROM Opportunity")
+    List<Object[]> minQuantityOfProducts();
 
-    //A count of all CLOSED_LOST Opportunities
-    @Query("Select count(id) From Opportunity where status like "CLOSED_WON" group by product)
-                    List<Object[]>findCountByProduct();
-                    List<Object[]> findCountByProduct();
-
-    @Query("SELECT sr.name, COUNT(o) FROM SalesRep sr JOIN sr.opportunities o GROUP BY sr.name")
-    List<Object[]> countOpportunitiesBySalesRep();
-    */
 
     //Queries grouped by COUNTRY
     @Query("SELECT a.country, COUNT(op) FROM Opportunity op JOIN op.accountId a GROUP BY a.country")
@@ -85,4 +74,20 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     Long minOpportunitiesAccount();
 
     //The median number of Opportunities associated with an Account can be displayed by typing “Median Opps per Account”
+
 }
+/*
+SELECT AVG(mid_vals) AS 'median' FROM (
+ SELECT tab1.MyNumber AS 'mid_vals' FROM
+  (
+   SELECT @row:=@row+1 AS 'row', a.MyNumber
+   FROM dataset AS a, (SELECT @row:=0) AS r
+   ORDER BY a.MyNumber
+  ) AS tab1,
+  (
+   SELECT COUNT(*) as 'count'
+   FROM dataset x
+  ) AS tab2
+  WHERE tab1.row >= tab2.count/2 and tab1.row <= ((tab2.count/2) +1)) AS tab3;
+  }
+ */

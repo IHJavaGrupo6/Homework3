@@ -10,13 +10,13 @@ import java.util.List;
 
 @Repository
 public interface LeadRepository extends JpaRepository<Lead, Long> {
-/*
+
     //By SalesRep
     //A count of Leads by SalesRep
-    //@Query("Select count(name) From Leads group by salesRep")
-    //List<Name[]> FindCountByNameLeads();
-    @Query("Select count(name) From Leads group by salesRep")
-    List<Name[]> FindCountByNameLeads();
-    */
+// dublicate in SalesRepRepository
+   // @Query("SELECT sr.name, COUNT(l) FROM Lead l JOIN l.salesRepId sr GROUP BY l.salesRepId")
+   //List<Object[]> countLeadsBySalesRep();
+
+
 
 }
