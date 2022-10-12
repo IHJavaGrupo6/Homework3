@@ -111,4 +111,25 @@ public class OpportunityRepositoryOscarTest {
         Long min = opportunityRepository.minOpportunitiesAccount();
         Assertions.assertEquals(Long.valueOf(1), min);
     }
+
+    @Test
+    @DisplayName("The mean quantity of products order")
+    void averageQuantityOfProducts_works(){
+            Double average = opportunityRepository.averageQuantityOfProducts();
+            Assertions.assertEquals(Double.valueOf(45), average);
+    }
+
+    @Test
+    @DisplayName("The maximum quantity of products")
+    void maxQuantityOfProducts_works(){
+        Long max = opportunityRepository.maxQuantityOfProducts();
+        Assertions.assertEquals(Long.valueOf(80), max);
+    }
+
+    @Test
+    @DisplayName("The minimum quantity of products")
+    void minQuantityOfProducts_works(){
+        Long min = opportunityRepository.minQuantityOfProducts();
+        Assertions.assertEquals(Long.valueOf(20), min);
+           }
 }
