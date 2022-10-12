@@ -64,7 +64,7 @@ public class AccountRepositoryTestByIndustry {
         account2 = accountRepository.save(new Account(Industry.MANUFACTURING, 200L, "BCN", "ESP", contactList, opportunityList2));
         account3 = accountRepository.save(new Account(Industry.MEDICAL, 200L, "BCN", "ESP", contactList, opportunityList3));
         account4 = accountRepository.save(new Account(Industry.OTHER, 200L, "BCN", "FRA", contactList, opportunityList4));
-        salesRep = salesRepRepository.save(new SalesRep(1L, "Jaume", leadList, opportunityList));
+        salesRep = salesRepRepository.save(new SalesRep("Jaume", leadList, opportunityList));
         lead = leadRepository.save(new Lead("Quim", 999888777, "mail@mail.com", "Patata", salesRep));
         lead2 = leadRepository.save(new Lead("Quim2", 999888777, "mail@mail.com", "Patata", salesRep));
         lead3 = leadRepository.save(new Lead("Quim3", 999888777, "mail@mail.com", "Patata"));
