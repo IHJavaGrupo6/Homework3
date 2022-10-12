@@ -43,9 +43,9 @@ public class Utilities {
 
     public static Lead newLead(String name, long phoneNumber, String email, String company) {
         System.out.println("Creating a new lead: ");
-        if (!Account.validatePhone(String.valueOf(phoneNumber)))
+        if (!validatePhone(String.valueOf(phoneNumber)))
             throw new IllegalArgumentException("Invalid phone format");
-        if (!Account.validate(email)) throw new IllegalArgumentException("Invalid email format");
+        if (!validate(email)) throw new IllegalArgumentException("Invalid email format");
         Lead lead = new Lead(name, phoneNumber, email, company);
         System.out.println("New lead created: ");
         System.out.println(lead);

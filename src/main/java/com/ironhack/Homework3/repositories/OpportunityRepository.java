@@ -1,5 +1,6 @@
 package com.ironhack.Homework3.repositories;
 
+import com.ironhack.Homework3.enums.Industry;
 import com.ironhack.Homework3.models.Opportunity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,13 +12,6 @@ import java.util.List;
 public interface OpportunityRepository extends JpaRepository<Opportunity, Long> {
 
 
-      //by SalesRep
-    //A count of all Opportunities by SalesRep
-    //dublicate in SalesRepRepository
-    //  @Query("SELECT sr.name, COUNT(o) FROM Opportunity o JOIN o.salesRepId sr GROUP BY o.salesRepId")
-    //  List<Object[]> countOpportunityBySalesRep();
-
-
     //The mean quantity of products order can be displayed
     @Query("SELECT AVG(quantity) FROM Opportunity ")
     List<Object[]> averageQuantityOfProducts();
@@ -25,6 +19,14 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     //the median quantity of products order
    // @Query("SELECT AVG(mid_vals) as 'median' FROM ("
       //      SELECT  Opportunity.quantity AS 'mid_vals' FROM ("SELECT @row:=@row+1 AS 'row', ))")
+
+
+    //by Product
+    //A count of all Opportunities by the product
+    @Query("Select count(id) From Opportunity group by product")
+    List<Object[]> findCountByProduct();
+    //by Product
+
 
     //The maximum quantity of products order
     @Query("SELECT MAX(quantity) FROM Opportunity")
@@ -34,31 +36,42 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     @Query("SELECT MIN(quantity) FROM Opportunity")
     List<Object[]> minQuantityOfProducts();
 
+//A count of all Opportunities by CITY
+
+    @Query("SELECT a.city, COUNT(o) FROM Opportunity o JOIN o.accountId a GROUP BY a.city")
+    List<Object[]> countOpportunitiesByCity();
+    @Query("SELECT a.city, COUNT(o) FROM Opportunity o JOIN o.accountId a  WHERE o.status = com.ironhack.Homework3.enums.Status.CLOSED_WON GROUP BY a.city")
+    List<Object[]> countClosedWonOpportunitiesByCity();
+    @Query("SELECT a.city, COUNT(o) FROM Opportunity o JOIN o.accountId a  WHERE o.status = com.ironhack.Homework3.enums.Status.CLOSED_LOST GROUP BY a.city")
+    List<Object[]> countClosedLostOpportunitiesByCity();
+
+    @Query("SELECT a.city, COUNT(o) FROM Opportunity o JOIN o.accountId a  WHERE o.status = com.ironhack.Homework3.enums.Status.OPEN GROUP BY a.city")
+    List<Object[]> countOpenOpportunitiesByCity();
 
     //Queries grouped by COUNTRY
     @Query("SELECT a.country, COUNT(op) FROM Opportunity op JOIN op.accountId a GROUP BY a.country")
     List<Object[]> countOpportunitiesByCountry();
 
-    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status LIKE 0 GROUP BY a.country")
+    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status LIKE 'OPEN' GROUP BY a.country")
     List<Object[]> countOpportunitiesByCountryWhereStatusLikeOpen();
 
-    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status LIKE 1 GROUP BY a.country")
+    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status LIKE 'CLOSED_WON' GROUP BY a.country")
     List<Object[]> countOpportunitiesByCountryWhereStatusLikeWon();
 
-    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status LIKE 2 GROUP BY a.country")
+    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status LIKE 'CLOSED_LOST' GROUP BY a.country")
     List<Object[]> countOpportunitiesByCountryWhereStatusLikeLost();
 
     //Queries grouped by PRODUCT
     @Query("SELECT op.product, COUNT(op) FROM Opportunity op GROUP BY op.product")
     List<Object[]> countOpportunitiesByProduct();
 
-    @Query("SELECT op.status, COUNT(op), op.product FROM Opportunity op WHERE op.status LIKE 0 GROUP BY op.product")
+    @Query("SELECT op.status, COUNT(op), op.product FROM Opportunity op WHERE op.status LIKE 'OPEN' GROUP BY op.product")
     List<Object[]> countOpportunitiesByProductWhereStatusLikeOpen();
 
-    @Query("SELECT op.status, COUNT(op), op.product FROM Opportunity op WHERE op.status LIKE 1 GROUP BY op.product")
+    @Query("SELECT op.status, COUNT(op), op.product FROM Opportunity op WHERE op.status LIKE 'CLOSED_WON' GROUP BY op.product")
     List<Object[]> countOpportunitiesByProductWhereStatusLikeWon();
 
-    @Query("SELECT op.status, COUNT(op), op.product FROM Opportunity op WHERE op.status LIKE 2 GROUP BY op.product")
+    @Query("SELECT op.status, COUNT(op), op.product FROM Opportunity op WHERE op.status LIKE 'CLOSED_LOST' GROUP BY op.product")
     List<Object[]> countOpportunitiesByProductWhereStatusLikeLost();
 
     //The mean number of Opportunities associated with an Account can be displayed by typing “Mean Opps per Account”
