@@ -20,7 +20,7 @@ public class Utilities {
 //    private static List<Account> totalAccounts = new ArrayList<>();
 //    private static List<SalesRep> totalSalesReps = new ArrayList<>();
     public static final Pattern VALID_PHONENUMBER_REGEX =
-            Pattern.compile("\\A[0-9]{1}\\z", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("\\A[0-9]{9}\\z", Pattern.CASE_INSENSITIVE);
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
@@ -87,6 +87,8 @@ public class Utilities {
         while (repeatAccQuestion) {
             try {
                 account = accountQuestion(contact, opportunity, accountRepository);
+                opportunity.setAccountId(accountRepository.findById(account.getId()).get());
+                opportunityRepository.save(opportunity);
                 repeatAccQuestion = false;
             } catch (IllegalArgumentException e) {
                 System.err.println(e.getMessage());
@@ -127,6 +129,7 @@ public class Utilities {
                 try {
                     Long id = getNumber("Please enter the id of the account that you want to associate the opportunity with: ");
                     account = existingAccount(id, contact, opportunity, accountRepository);
+
                     repeatAcc = false;
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
@@ -157,10 +160,11 @@ public class Utilities {
     }
 
     public static Account existingAccount(Long id, Contact contact, Opportunity opportunity, AccountRepository accountRepository) {
-        if (!accountRepository.existsById(id)) throw new IllegalArgumentException("No account found with this id!");
+        if (!accountRepository.existsById(id) || accountRepository.findAll().isEmpty()) throw new IllegalArgumentException("No account found with this id!");
         Account account = accountRepository.findById(id).get();
-        account.getContacts().add(contact);
+        account.setContacts(contact);
         account.getOpportunities().add(opportunity);
+        accountRepository.save(account);
         return account;
     }
 
@@ -178,7 +182,7 @@ public class Utilities {
 
     public static Account newAccount(String industry, long employeeCount, String city, String country, Contact contact, Opportunity opportunity) {
         Account account = new Account(industry, employeeCount, city, country);
-        account.getContacts().add(contact);
+        account.setContacts(contact);
         account.getOpportunities().add(opportunity);
         return account;
     }

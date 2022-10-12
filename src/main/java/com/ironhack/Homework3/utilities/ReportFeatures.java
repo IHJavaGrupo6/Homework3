@@ -61,6 +61,9 @@ public class ReportFeatures {
             case "opportunity":
                 opportunityReport(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
             case "back":
+                new Menu().mainMenu(accountRepository,leadRepository,opportunityRepository,salesRepRepository);
+            default:
+                System.err.println("No such command found! Back to Report.");
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
         }
     }
@@ -113,7 +116,9 @@ public class ReportFeatures {
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
             case "back":
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
-
+            default:
+                System.err.println("No such command found! Back to Report.");
+                repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
         }
     }
 
@@ -158,7 +163,9 @@ public class ReportFeatures {
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
             case "back":
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
-
+            default:
+                System.err.println("No such command found! Back to Report.");
+                repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
         }
     }
 
@@ -203,7 +210,9 @@ public class ReportFeatures {
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
             case "back":
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
-
+            default:
+                System.err.println("No such command found! Back to Report.");
+                repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
         }
     }
 
@@ -248,7 +257,9 @@ public class ReportFeatures {
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
             case "back":
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
-
+            default:
+                System.err.println("No such command found! Back to Report.");
+                repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
         }
     }
 
@@ -293,6 +304,9 @@ public class ReportFeatures {
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
             case "back":
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
+            default:
+                System.err.println("No such command found! Back to Report.");
+                repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
         }
     }
 
@@ -329,7 +343,9 @@ public class ReportFeatures {
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
             case "back":
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
-
+            default:
+                System.err.println("No such command found! Back to Report.");
+                repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
         }
     }
     public static void quantityReport(SalesRepRepository salesRepRepository, OpportunityRepository opportunityRepository,
@@ -364,6 +380,9 @@ public class ReportFeatures {
                 System.out.println("Min= "+ min);
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
             case "back":
+                repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
+            default:
+                System.err.println("No such command found! Back to Report.");
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
         }
     }
@@ -401,7 +420,9 @@ public class ReportFeatures {
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
             case "back":
                 repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
-
+            default:
+                System.err.println("No such command found! Back to Report.");
+                repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
         }
     }
 
