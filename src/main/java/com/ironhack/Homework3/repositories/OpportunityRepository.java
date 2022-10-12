@@ -11,16 +11,19 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
 
     //The mean quantity of products order can be displayed
     @Query("SELECT AVG(quantity) FROM Opportunity ")
+    List<Object[]> averageQuantityOfProducts();
 
     //the median quantity of products order
-    @Query("SELECT AVG(mid_vals) as 'median' FROM (
-            SELECT  Opportunity.qua)")
+   // @Query("SELECT AVG(mid_vals) as 'median' FROM ("
+      //      SELECT  Opportunity.quantity AS 'mid_vals' FROM ("SELECT @row:=@row+1 AS 'row', ))")
 
     //The maximum quantity of products order
-    @Query("SELECT MAX(quantity) FROM Opportunity")
+    @Query("SELECT MAX(quantity) FROM Opportunity");
+    List<Object[]> maxQuantityOfProducts();
 
     //The minimum quantity of products order
-    @Query("SELECT MIN(quantity) FROM Opportunity")
+    @Query("SELECT MIN(quantity) FROM Opportunity");
+    List<Object[]> minQuantityOfProducts();
 
 }
 /*
