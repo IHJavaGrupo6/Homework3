@@ -27,6 +27,6 @@ public class Homework3Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		Menu menu = new Menu();
-		menu.mainMenu();
+		menu.mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
 	}
 }
