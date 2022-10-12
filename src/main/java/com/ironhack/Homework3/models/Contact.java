@@ -56,7 +56,7 @@ public class Contact{
 
     @Override
     public String toString() {
-        return "Contact: name = " + getName() + ", phoneNumber = " + getPhoneNumber() +
-                ", email = " + getEmail() + ", companyName = " + getCompanyName() + "\n";
+        return "Contact: name = " + name + ", phoneNumber = " + phoneNumber +
+                ", email = " + email + ", companyName = " + companyName + "\n";
     }
 }

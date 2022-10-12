@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,14 @@ public class SalesRep {
     private List<Opportunity> opportunities;
 
     public SalesRep() {
+        this.leads = new ArrayList<>();
+        this.opportunities = new ArrayList<>();
+    }
+
+    public SalesRep(String name) {
+        this.name = name;
+        this.leads = new ArrayList<>();
+        this.opportunities = new ArrayList<>();
     }
 
     public SalesRep(String name, List<Lead> leads, List<Opportunity> opportunities) {
@@ -60,7 +69,7 @@ public class SalesRep {
 
     @Override
     public String toString() {
-        return "SalesRep: id = " + this.id + ", name = " + name +
-                "\n Leads List \n" + leads + "\n Opportunity List \n" + opportunities;
+        return "SalesRep: id = " + id + ", name = " + name;
+                //"\n Leads List \n" + leads + "\n Opportunity List \n" + opportunities;
     }
 }
