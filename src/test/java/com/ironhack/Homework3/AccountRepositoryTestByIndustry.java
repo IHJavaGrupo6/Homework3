@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @SpringBootTest
-public class AccountRepositoryTest {
+public class AccountRepositoryTestByIndustry {
 
     SalesRep salesRep;
     Lead lead;
