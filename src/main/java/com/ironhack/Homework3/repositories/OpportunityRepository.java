@@ -45,6 +45,32 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
 
 */
 
+    //Queries grouped by COUNTRY
+    @Query("SELECT a.country, COUNT(op) FROM Opportunity op JOIN op.accountId a GROUP BY a.country")
+    List<Object[]> countOpportunitiesByCountry();
+
+    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status LIKE 0 GROUP BY a.country")
+    List<Object[]> countOpportunitiesByCountryWhereStatusLikeOpen();
+
+    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status LIKE 1 GROUP BY a.country")
+    List<Object[]> countOpportunitiesByCountryWhereStatusLikeWon();
+
+    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status LIKE 2 GROUP BY a.country")
+    List<Object[]> countOpportunitiesByCountryWhereStatusLikeLost();
+
+    //Queries grouped by PRODUCT
+    @Query("SELECT op.product, COUNT(op) FROM Opportunity op GROUP BY op.product")
+    List<Object[]> countOpportunitiesByProduct();
+
+    @Query("SELECT op.status, COUNT(op), op.product FROM Opportunity op WHERE op.status LIKE 0 GROUP BY op.product")
+    List<Object[]> countOpportunitiesByProductWhereStatusLikeOpen();
+
+    @Query("SELECT op.status, COUNT(op), op.product FROM Opportunity op WHERE op.status LIKE 1 GROUP BY op.product")
+    List<Object[]> countOpportunitiesByProductWhereStatusLikeWon();
+
+    @Query("SELECT op.status, COUNT(op), op.product FROM Opportunity op WHERE op.status LIKE 2 GROUP BY op.product")
+    List<Object[]> countOpportunitiesByProductWhereStatusLikeLost();
+
     //The mean number of Opportunities associated with an Account can be displayed by typing “Mean Opps per Account”
     @Query(value = "SELECT AVG(opportunity.opp) FROM (SELECT COUNT(account_id) as opp FROM homework3.opportunity GROUP BY opportunity.account_id) as opportunity", nativeQuery = true)
     Double meanOpportunitiesAccount();
