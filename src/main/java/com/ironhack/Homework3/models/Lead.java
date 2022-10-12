@@ -1,5 +1,7 @@
 package com.ironhack.Homework3.models;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,6 +9,7 @@ import javax.persistence.*;
 public class Lead {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
