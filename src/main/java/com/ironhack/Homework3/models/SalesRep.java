@@ -1,5 +1,6 @@
 package com.ironhack.Homework3.models;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class SalesRep {
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;

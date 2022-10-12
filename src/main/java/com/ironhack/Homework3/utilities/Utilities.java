@@ -6,6 +6,8 @@ import com.ironhack.Homework3.models.Lead;
 import com.ironhack.Homework3.models.Opportunity;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.ironhack.Homework3.utilities.Menu.mainMenu;
 import static java.lang.Long.parseLong;
@@ -15,6 +17,11 @@ public class Utilities {
     private static List<Contact> totalContacts = new ArrayList<>();
     private static List<Opportunity> totalOpportunities = new ArrayList<>();
     private static List<Account> totalAccounts = new ArrayList<>();
+    public static final Pattern VALID_PHONENUMBER_REGEX =
+            Pattern.compile("\\A[0-9]{3}[0-9]{3}[0-9]{3}\\z", Pattern.CASE_INSENSITIVE);
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
     public static String getAnswer(String question) {
         Scanner input = new Scanner(System.in);
         System.out.println(question);
@@ -24,7 +31,6 @@ public class Utilities {
         }
         return answer;
     }
-
     public static long getNumber(String question) {
         Scanner input = new Scanner(System.in);
         System.out.println(question);
@@ -34,17 +40,17 @@ public class Utilities {
         }
         return parseLong(numberString);
     }
+
     public static Lead newLead(String name, long phoneNumber, String email, String company) {
         System.out.println("Creating a new lead: ");
-        if (!Account.validatePhone(String.valueOf(phoneNumber)))
+        if (!validatePhone(String.valueOf(phoneNumber)))
             throw new IllegalArgumentException("Invalid phone format");
-        if (!Account.validate(email)) throw new IllegalArgumentException("Invalid email format");
+        if (!validate(email)) throw new IllegalArgumentException("Invalid email format");
         Lead lead = new Lead(name, phoneNumber, email, company);
         System.out.println("New lead created: ");
         System.out.println(lead);
         return lead;
     }
-
     public static void convertLead(int id) {
         // step 1: fetching the lead
         if (id < 0 || id >= leadMap.size()) throw new IllegalArgumentException("No lead found with this id!");
@@ -87,6 +93,7 @@ public class Utilities {
         totalAccounts.add(account);
         leadMap.remove(id);
     }
+
     public static Account createNewAccount(Contact contact,Opportunity opportunity){
         Account account = null;
         boolean repeatAccount = true;
@@ -143,12 +150,12 @@ public class Utilities {
             System.out.println("•" + opportunity.toString());
         }
     }
-
     public static void backToMainMenu(Exception e) {
         System.err.println(e.getMessage());
         System.err.println("Going back to the main menu.");
         mainMenu();
     }
+
     public static Map<Long, Lead> getLeadMap() {
         return leadMap;
     }
@@ -179,6 +186,18 @@ public class Utilities {
 
     public static void setTotalAccounts(List<Account> totalAccounts) {
         Utilities.totalAccounts = totalAccounts;
+    }
+
+
+    public static boolean validatePhone(String phoneStr) {
+        Matcher matcher = VALID_PHONENUMBER_REGEX.matcher(phoneStr);
+        return matcher.find();
+    }
+
+
+    public static boolean validate(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+        return matcher.find();
     }
 }
 

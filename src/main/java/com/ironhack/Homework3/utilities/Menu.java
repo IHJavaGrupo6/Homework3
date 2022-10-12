@@ -63,10 +63,10 @@ public class Menu {
                     try {
                         String name = getAnswer("Please enter the name of the new lead: ");
                         Long number = getNumber("Please enter a phone number for the new lead: ");
-                        if (!Account.validatePhone(String.valueOf(number)))
+                        if (!Utilities.validatePhone(String.valueOf(number)))
                             throw new IllegalArgumentException("Invalid phone format");
                         String mail = getAnswer("Please enter an email for the new lead: ");
-                        if (!Account.validate(mail)) throw new IllegalArgumentException("Invalid email format");
+                        if (!Utilities.validate(mail)) throw new IllegalArgumentException("Invalid email format");
                         String company = getAnswer("Please enter the name of the company for the new lead: ");
                         lead = newLead(name, number, mail, company);
                         repeatLead = false;

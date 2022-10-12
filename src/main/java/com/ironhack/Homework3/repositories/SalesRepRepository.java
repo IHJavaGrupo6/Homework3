@@ -16,4 +16,13 @@ public interface SalesRepRepository extends JpaRepository<SalesRep, Long> {
     @Query("SELECT sr.name, COUNT(o) FROM SalesRep sr JOIN sr.opportunities o GROUP BY sr.name")
     List<Object[]> countOpportunitiesBySalesRep();
 
+
+    @Query("SELECT sr.name, COUNT(o) FROM SalesRep  sr JOIN sr.opportunities o WHERE o.status LIKE 'CLOSED_WON' GROUP BY sr.name")
+    List<Object[]> findCountByStatusClosedWon();
+
+    @Query("SELECT sr.name, COUNT(o) FROM SalesRep  sr JOIN sr.opportunities o WHERE o.status LIKE 'CLOSED_LOST' GROUP BY sr.name")
+    List<Object[]> findCountByStatusClosedLost();
+
+    @Query("SELECT sr.name, COUNT(o) FROM SalesRep  sr JOIN sr.opportunities o WHERE o.status LIKE 'OPEN' GROUP BY sr.name")
+    List<Object[]> findCountByStatusOpen();
 }

@@ -2,17 +2,20 @@ package com.ironhack.Homework3.models;
 
 import com.ironhack.Homework3.enums.Product;
 import com.ironhack.Homework3.enums.Status;
-import lombok.AllArgsConstructor;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 
 @Entity
 public class Opportunity {
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private long quantity;
+    @Enumerated(EnumType.STRING)
     private Product product;
+    @Enumerated(EnumType.STRING)
     private Status status;
     @Embedded
     private Contact decisionMaker;
