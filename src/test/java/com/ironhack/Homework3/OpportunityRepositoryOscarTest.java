@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-public class OpportunityRepositoryTest {
+public class OpportunityRepositoryOscarTest {
 
     SalesRep salesRep;
     SalesRep salesRep2;
