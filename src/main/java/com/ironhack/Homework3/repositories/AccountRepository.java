@@ -16,15 +16,15 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     List<Object[]> countOpportunitiesByIndustry();
 
     // A count of all CLOSED_WON Opportunities by industry can be displayed by typing “Report CLOSED-WON by Industry”
-    @Query("SELECT a.industry, count(o) FROM Account a JOIN a.opportunities o WHERE o.status LIKE 'CLOSED_WON' GROUP BY a.industry")
+    @Query("SELECT a.industry, count(o) FROM Account a JOIN a.opportunities o WHERE o.status = 'CLOSED_WON' GROUP BY a.industry")
     List<Object[]> countClosedWonOpportunitiesByIndustry();
 
     // A count of all CLOSED_LOST Opportunities by industry can be displayed by typing “Report CLOSED-LOST by Industry”
-    @Query("SELECT a.industry, count(o) FROM Account a JOIN a.opportunities o WHERE o.status LIKE 'CLOSED_LOST' GROUP BY a.industry")
+    @Query("SELECT a.industry, count(o) FROM Account a JOIN a.opportunities o WHERE o.status = 'CLOSED_LOST' GROUP BY a.industry")
     List<Object[]> countClosedLostOpportunitiesByIndustry();
 
     // A count of all OPEN Opportunities by industry can be displayed by typing “Report OPEN by Industry”
-    @Query("SELECT a.industry, count(o) FROM Account a JOIN a.opportunities o WHERE o.status LIKE 'OPEN' GROUP BY a.industry")
+    @Query("SELECT a.industry, count(o) FROM Account a JOIN a.opportunities o WHERE o.status = 'OPEN' GROUP BY a.industry")
     List<Object[]> countOpenOpportunitiesByIndustry();
 
 
