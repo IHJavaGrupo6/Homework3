@@ -1,6 +1,7 @@
 package com.ironhack.Homework3.models;
 
 import com.ironhack.Homework3.enums.Industry;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,8 +13,10 @@ import java.util.regex.Pattern;
 public class Account {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Enumerated(EnumType.STRING)
     private Industry industry;
     private Long employeeCount;
     private String city;
@@ -23,16 +26,8 @@ public class Account {
     @OneToMany(mappedBy = "accountId")
     private List<Opportunity> opportunities;
 
+    // Constructor empty
     public Account() {
-    }
-
-    public Account(Industry industry, Long employeeCount, String city, String country, List<Contact> contacts, List<Opportunity> opportunities) {
-        this.industry = industry;
-        this.employeeCount = employeeCount;
-        this.city = city;
-        this.country = country;
-        this.contacts = contacts;
-        this.opportunities = opportunities;
     }
 
     //  Constructor with empty contact list and opportunity list
@@ -45,7 +40,7 @@ public class Account {
         opportunities = new ArrayList<>();
     }
 
-    //  Constructor with adding a contact and an opportunity to the lists
+    //  Constructor with adding 1 contact and 1 opportunity to the lists
     public Account(String industry, Long employeeCount, String city, String country, Contact contact, Opportunity opportunity) {
         setIndustry(industry);
         setEmployeeCount(employeeCount);
@@ -53,6 +48,16 @@ public class Account {
         setCountry(country);
         contacts.add(contact);
         opportunities.add(opportunity);
+    }
+
+    // Constructor using a list of contacts and a list of opportunities
+    public Account(Industry industry, long employeeCount, String city, String country, List<Contact> contacts, List<Opportunity> opportunities) {
+        this.industry = industry;
+        this.employeeCount = employeeCount;
+        this.city = city;
+        this.country = country;
+        this.contacts = contacts;
+        this.opportunities = opportunities;
     }
 
     //  Getters
@@ -132,5 +137,9 @@ public class Account {
     public String toString() {
         return "Account: id = " + id + ", industry= " + industry + ", employeeCount= " + employeeCount + ", city= " + city + ", country= " + country +
                 "\n Contact List \n" + contacts + "\n Opportunity List \n" + opportunities;
+    }
+
+    public void setOpportunities(List<Opportunity> opportunities) {
+        this.opportunities = opportunities;
     }
 }

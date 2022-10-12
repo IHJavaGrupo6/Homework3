@@ -9,7 +9,8 @@ import java.util.List;
 
 @Repository
 public interface OpportunityRepository extends JpaRepository<Opportunity, Long> {
-/*
+
+    /*
     //by SalesRep
     //A count of all Opportunities by SalesRep
     @Query("Select count(id) From Opportunity group by SalesRep")
@@ -36,16 +37,15 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     @Query("Select count(id) From Opportunity where status like "CLOSED_WON" group by product)
             List<Object[]>findCountByProduct();
 
-            //A count of all CLOSED_LOST Opportunities
-            @Query("Select count(id) From Opportunity where status like "CLOSED_WON" group by product)
+    //A count of all CLOSED_LOST Opportunities
+    @Query("Select count(id) From Opportunity where status like "CLOSED_WON" group by product)
                     List<Object[]>findCountByProduct();
-
                     List<Object[]> findCountByProduct();
 
-        @Query("SELECT sr.name, COUNT(o) FROM SalesRep sr JOIN sr.opportunities o GROUP BY sr.name")
+    @Query("SELECT sr.name, COUNT(o) FROM SalesRep sr JOIN sr.opportunities o GROUP BY sr.name")
     List<Object[]> countOpportunitiesBySalesRep();
+    */
 
-*/
     //Queries grouped by COUNTRY
     @Query("SELECT a.country, COUNT(op) FROM Opportunity op JOIN op.accountId a GROUP BY a.country")
     List<Object[]> countOpportunitiesByCountry();
