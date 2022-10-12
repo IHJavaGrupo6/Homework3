@@ -116,23 +116,6 @@ public class Account {
         this.country = country;
     }
 
-    public static final Pattern VALID_PHONENUMBER_REGEX =
-            Pattern.compile("\\A[0-9]{3}[0-9]{3}[0-9]{3}\\z", Pattern.CASE_INSENSITIVE);
-
-    public static boolean validatePhone(String phoneStr) {
-        Matcher matcher = VALID_PHONENUMBER_REGEX.matcher(phoneStr);
-        return matcher.find();
-    }
-
-
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-
-    public static boolean validate(String emailStr) {
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
-        return matcher.find();
-    }
-
     @Override
     public String toString() {
         return "Account: id = " + id + ", industry= " + industry + ", employeeCount= " + employeeCount + ", city= " + city + ", country= " + country +
