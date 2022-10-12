@@ -1,5 +1,6 @@
 package com.ironhack.Homework3.repositories;
 
+import com.ironhack.Homework3.enums.Industry;
 import com.ironhack.Homework3.models.Opportunity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,6 +27,14 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
    // @Query("SELECT AVG(mid_vals) as 'median' FROM ("
       //      SELECT  Opportunity.quantity AS 'mid_vals' FROM ("SELECT @row:=@row+1 AS 'row', ))")
 
+
+    //by Product
+    //A count of all Opportunities by the product
+    @Query("Select count(id) From Opportunity group by product")
+    List<Object[]> findCountByProduct();
+    //by Product
+
+
     //The maximum quantity of products order
     @Query("SELECT MAX(quantity) FROM Opportunity")
     List<Object[]> maxQuantityOfProducts();
@@ -34,6 +43,17 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     @Query("SELECT MIN(quantity) FROM Opportunity")
     List<Object[]> minQuantityOfProducts();
 
+//A count of all Opportunities by CITY
+
+    @Query("SELECT a.city, COUNT(o) FROM Opportunity o JOIN o.accountId a GROUP BY a.city")
+    List<Object[]> countOpportunitiesByCity();
+    @Query("SELECT a.city, COUNT(o) FROM Opportunity o JOIN o.accountId a  WHERE o.status = com.ironhack.Homework3.enums.Status.CLOSED_WON GROUP BY a.city")
+    List<Object[]> countClosedWonOpportunitiesByCity();
+    @Query("SELECT a.city, COUNT(o) FROM Opportunity o JOIN o.accountId a  WHERE o.status = com.ironhack.Homework3.enums.Status.CLOSED_LOST GROUP BY a.city")
+    List<Object[]> countClosedLostOpportunitiesByCity();
+
+    @Query("SELECT a.city, COUNT(o) FROM Opportunity o JOIN o.accountId a  WHERE o.status = com.ironhack.Homework3.enums.Status.OPEN GROUP BY a.city")
+    List<Object[]> countOpenOpportunitiesByCity();
 
     //Queries grouped by COUNTRY
     @Query("SELECT a.country, COUNT(op) FROM Opportunity op JOIN op.accountId a GROUP BY a.country")

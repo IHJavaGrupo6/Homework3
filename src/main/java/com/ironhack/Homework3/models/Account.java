@@ -51,6 +51,7 @@ public class Account {
     }
 
     // Constructor using a list of contacts and a list of opportunities
+
     public Account(Industry industry, long employeeCount, String city, String country, List<Contact> contacts, List<Opportunity> opportunities) {
         this.industry = industry;
         this.employeeCount = employeeCount;
