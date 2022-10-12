@@ -2,7 +2,6 @@ package com.ironhack.Homework3;
 
 import com.ironhack.Homework3.enums.Industry;
 import com.ironhack.Homework3.enums.Product;
-import com.ironhack.Homework3.enums.Status;
 import com.ironhack.Homework3.models.*;
 import com.ironhack.Homework3.repositories.AccountRepository;
 import com.ironhack.Homework3.repositories.LeadRepository;
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-public class SalesRepRepositoryTest {
+public class SalesRepRepositoryQuimTest {
     SalesRep salesRep;
     SalesRep salesRep2;
     Lead lead;

@@ -15,10 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
-public class OpportunityRepositoryTest {
+public class OpportunityRepositoryQuimTest {
     SalesRep salesRep;
     SalesRep salesRep2;
     Lead lead;
