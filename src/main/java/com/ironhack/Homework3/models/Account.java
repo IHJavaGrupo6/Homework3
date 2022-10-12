@@ -26,7 +26,14 @@ public class Account {
     public Account() {
     }
 
-
+    public Account(Industry industry, long employeeCount, String city, String country, List<Contact> contacts, List<Opportunity> opportunities) {
+        this.industry = industry;
+        this.employeeCount = employeeCount;
+        this.city = city;
+        this.country = country;
+        this.contacts = contacts;
+        this.opportunities = opportunities;
+    }
 
     //  Constructor with empty contact list and opportunity list
     public Account(String industry, long employeeCount, String city, String country) {
