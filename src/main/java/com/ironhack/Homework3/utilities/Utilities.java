@@ -178,7 +178,7 @@ public class Utilities {
 
     public static Account newAccount(String industry, long employeeCount, String city, String country, Contact contact, Opportunity opportunity) {
         Account account = new Account(industry, employeeCount, city, country);
-        account.getContacts().add(contact);
+        account.c.add(contact);
         account.getOpportunities().add(opportunity);
         return account;
     }
