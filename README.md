@@ -44,27 +44,28 @@ New SalesRep created:
 SalesRep: id = 1, name = Quim
 =========  
 ~~~~
-
 =========
-~~~~
+
 ### Option -Show SalesReps-
 Introduce the command "Show SalesReps" (case insensitive) to display the list of leads(HashMap object).
-~~~~
-=========  
+
+========= 
+~~~
 What do you want to do? 
 show SalesReps
  Existing SalesReps: 
 
 •SalesRep: id = 1, name = Quim
-
+~~~
 =========
-~~~~  
+
 
 ### Option -New lead-
 Insert the comamand "New Lead" (case insensitive) to generate a new lead, introducing by inputs the lead information(Name, Phone Number,
 email and Company Name).
-~~~~
+
 =========  
+~~~
 What do you want to do? 
 new lead
 Creating a new lead: 
@@ -151,8 +152,10 @@ Account: id = 2, industry= OTHER, employeeCount= 28, city= Bcn, country= España
 Lead 2 removed fromm the database.
 =========
 ~~~~
+
 ### Option -Show opportunities-
 Insert the command "show opportunities" (case insensitive) to display a list of all opportunities.
+
 ~~~~
 =========  
 What do you want to do?  
@@ -163,8 +166,10 @@ Existing opportunities:
 Decision maker Contact: id = 0, name = Aña, phoneNumber = 666777888, email = aña@myenterpryse.com, companyName = My Enterpryse 2  
 =========
 ~~~~
+
 ### Option -Look up opportunity + id-
 Introduce the command "look up opportunity id" to show an opportunity by its id number.
+
 ~~~~
 =========  
 What do you want to do?  
@@ -173,8 +178,10 @@ Opportunity: id = 0, product = HYBRID, trucks quantity = 50, status = OPEN
 Decision maker Contact: id = 0, name = Aña, phoneNumber = 666777888, email = aña@myenterpryse.com, companyName = My Enterpryse 2  
 =========
 ~~~~
+
 ### Option -Close-Won + id-
 Introduce de command "close-won" + id (case insensitive) to close an opportunity that ended with a sale.
+
 ~~~~
 =========  
 What do you want to do?  
@@ -186,6 +193,7 @@ Decision maker Contact: id = 0, name = Quim, phoneNumber = 666222111, email = qu
 
 ### Option -Close-Lost + id-
 Insert de command "close-lost" + id (case insensitive) to close a lost opportunity by its id number.
+
 ~~~~
 =========  
 What do you want to do?  
@@ -194,11 +202,12 @@ Opportunity: id = 0, product = HYBRID, trucks quantity = 30, status = CLOSED_LOS
 Decision maker Contact: id = 0, name = Quim, phoneNumber = 666444888, email = quim@myenterpryse.com, companyName = My enterpryse  
 =========
 ~~~~
+
 ### Option -Report-
 Insert the command "report" (case insensitive) to enter the menu of report features.
-~~~~
+
+~~~
 =========
-~~~~
 ### -Report Features menu-
 REPORT MENU
 Available commands: 
@@ -214,10 +223,11 @@ Available commands:
 What do you want to do? 
 ~~~~
 =========
-~~~~
+
 First, you will have to select a category from which you want to print the reports. And the inside each category you will be givent different options.
 For example, if you type "SalesRep" (case insensitive) you will arrive to the following menu:
-~~~~
+
+~~~
 SalesRep
 • Report Lead by SalesRep 
 • Report Opportunity by SalesRep 
@@ -226,19 +236,23 @@ SalesRep
 • Report Open by SalesRep 
 • Back 
 ~~~~
+
 After choosing a specific Report Feature you will receive a table with the corresponding results.
 For example, if you type "report opportunity by sales rep" you will see something like this:
+
 ~~~~
 report opportunity by sales rep
 Quim 2
 Jaume 3
 Sergi 1
 ~~~~
+
 If you type "back" (case insensitive) you will go back to the Main Menu.
 =========
-~~~~
+
 ### Option -Exit-
 Insert the command "exit" (case insensitive) to turn off the CRM.
+
 ~~~~
 =========
 What do you want to do?  
