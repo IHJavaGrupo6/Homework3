@@ -21,9 +21,9 @@ public class Account {
     private Long employeeCount;
     private String city;
     private String country;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Contact> contacts = new ArrayList<>();
-    @OneToMany(mappedBy = "accountId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "accountId")
     private List<Opportunity> opportunities = new ArrayList<>();
 
     // Constructor empty

@@ -162,8 +162,8 @@ public class Utilities {
     public static Account existingAccount(Long id, Contact contact, Opportunity opportunity, AccountRepository accountRepository) {
         if (!accountRepository.existsById(id) || accountRepository.findAll().isEmpty()) throw new IllegalArgumentException("No account found with this id!");
         Account account = accountRepository.findById(id).get();
-        //account.setContacts(contact);
-        account.getOpportunities().add(opportunity);
+        account.setContacts(contact);
+        //account.getOpportunities().add(opportunity);
         accountRepository.save(account);
         return account;
     }
