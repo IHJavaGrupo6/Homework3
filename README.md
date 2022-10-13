@@ -221,13 +221,14 @@ Available commands:
 • Opportunity reports 
 • Back to main menu 
 What do you want to do? 
-~~~~
 =========
+~~~~
 
 First, you will have to select a category from which you want to print the reports. And the inside each category you will be givent different options.
 For example, if you type "SalesRep" (case insensitive) you will arrive to the following menu:
 
 ~~~
+=========
 SalesRep
 • Report Lead by SalesRep 
 • Report Opportunity by SalesRep 
@@ -235,19 +236,23 @@ SalesRep
 • Report Close-Lost by SalesRep 
 • Report Open by SalesRep 
 • Back 
+=========
 ~~~~
 
 After choosing a specific Report Feature you will receive a table with the corresponding results.
 For example, if you type "report opportunity by sales rep" you will see something like this:
 
 ~~~~
+=========
 report opportunity by sales rep
 Quim 2
 Jaume 3
 Sergi 1
+=========
 ~~~~
 
-If you type "back" (case insensitive) you will go back to the Main Menu.
+=========
+### If you type "back" (case insensitive) you will go back to the Main Menu.
 =========
 
 ### Option -Exit-
