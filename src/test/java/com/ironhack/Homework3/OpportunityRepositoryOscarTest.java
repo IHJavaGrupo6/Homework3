@@ -20,7 +20,6 @@ import java.util.List;
 public class OpportunityRepositoryOscarTest {
 
     SalesRep salesRep;
-    SalesRep salesRep2;
     Lead lead;
     Lead lead2;
     Lead lead3;
@@ -32,16 +31,13 @@ public class OpportunityRepositoryOscarTest {
     Account account;
     Account account2;
     List<Lead> leadList;
-    List<Lead> leadList2;
     List<Opportunity> opportunityList;
     List<Opportunity> opportunityList2;
     List<Contact> contactList;
     @Autowired
     OpportunityRepository opportunityRepository;
-
     @Autowired
     LeadRepository leadRepository;
-
     @Autowired
     SalesRepRepository salesRepRepository;
     @Autowired
@@ -54,8 +50,7 @@ public class OpportunityRepositoryOscarTest {
         opportunityList2 = new ArrayList<>();
         contactList = new ArrayList<>();
 
-
-        salesRep = salesRepRepository.save(new SalesRep( "Jaume", leadList, opportunityList));
+        salesRep = salesRepRepository.save(new SalesRep("Jaume", leadList, opportunityList));
         lead = leadRepository.save(new Lead("Quim", 999888777, "mail@mail.com", "Patata", salesRep));
         lead2 = leadRepository.save(new Lead("Quim2", 999888777, "mail@mail.com", "Patata", salesRep));
         lead3 = leadRepository.save(new Lead("Quim3", 999888777, "mail@mail.com", "Patata"));
@@ -76,8 +71,6 @@ public class OpportunityRepositoryOscarTest {
         opportunityList2.add(opportunity4);
         leadList.add(lead);
         leadList.add(lead2);
-
-
     }
 
 
@@ -87,10 +80,8 @@ public class OpportunityRepositoryOscarTest {
         opportunityRepository.deleteAll();
         accountRepository.deleteAll();
         salesRepRepository.deleteAll();
-
     }
 
-    //The mean number of Opportunities associated with an Account can be displayed by typing “Mean Opps per Account”
     @Test
     @DisplayName("The mean number of Opps associated with an Account")
     void meanNumberOpportunitiesAssociatedAccount_works() {
@@ -100,36 +91,57 @@ public class OpportunityRepositoryOscarTest {
 
     @Test
     @DisplayName("The max number of Opps associated with an Account")
-    void maxNumberOpportunitiesAssociatedAccount_works(){
+    void maxNumberOpportunitiesAssociatedAccount_works() {
         Long max = opportunityRepository.maxOpportunitiesAccount();
         Assertions.assertEquals(Long.valueOf(3), max);
     }
 
     @Test
     @DisplayName("The min number of Opps associated with an Account")
-    void minNumberOpportunitiesAssociatedAccount_works(){
+    void minNumberOpportunitiesAssociatedAccount_works() {
         Long min = opportunityRepository.minOpportunitiesAccount();
         Assertions.assertEquals(Long.valueOf(1), min);
     }
 
     @Test
+    @DisplayName("The median number of Opps associated with an Account")
+    void medianNumberOpportunitiesAssociatedAccount_works() {
+        Double median = opportunityRepository.medianOpportunitiesAccount();
+        Assertions.assertEquals(Double.valueOf(12), median);
+    }
+
+    @Test
+    @DisplayName("Shows a count of all Opportunities by the product")
+    void findCountByProduct_works() {
+        List<Object[]> productList = opportunityRepository.findCountByProduct();
+        Assertions.assertEquals((long)2, productList.get(0)[0]);
+    }
+
+    @Test
     @DisplayName("The mean quantity of products order")
-    void averageQuantityOfProducts_works(){
-            Double average = opportunityRepository.averageQuantityOfProducts();
-            Assertions.assertEquals(Double.valueOf(45), average);
+    void averageQuantityOfProducts_works() {
+        Double average = opportunityRepository.averageQuantityOfProducts();
+        Assertions.assertEquals(Double.valueOf(45), average);
     }
 
     @Test
     @DisplayName("The maximum quantity of products")
-    void maxQuantityOfProducts_works(){
+    void maxQuantityOfProducts_works() {
         Long max = opportunityRepository.maxQuantityOfProducts();
         Assertions.assertEquals(Long.valueOf(80), max);
     }
 
     @Test
     @DisplayName("The minimum quantity of products")
-    void minQuantityOfProducts_works(){
+    void minQuantityOfProducts_works() {
         Long min = opportunityRepository.minQuantityOfProducts();
         Assertions.assertEquals(Long.valueOf(20), min);
-           }
+    }
+
+    @Test
+    @DisplayName("The median quantity of products")
+    void medianQuantityOfProducts_works() {
+        Double median = opportunityRepository.medianQuantityOfProducts();
+        Assertions.assertEquals(Double.valueOf(40), median);
+    }
 }

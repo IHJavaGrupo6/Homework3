@@ -1,24 +1,18 @@
 package com.ironhack.Homework3.utilities;
 
-import com.ironhack.Homework3.enums.Product;
 import com.ironhack.Homework3.models.*;
 import com.ironhack.Homework3.repositories.AccountRepository;
 import com.ironhack.Homework3.repositories.LeadRepository;
 import com.ironhack.Homework3.repositories.OpportunityRepository;
 import com.ironhack.Homework3.repositories.SalesRepRepository;
 
-import java.util.*;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.lang.Long.parseLong;
 
 public class Utilities {
-//    private static Map<Long, Lead> leadMap = new HashMap<>();
-//    private static List<Contact> totalContacts = new ArrayList<>();
-//    private static List<Opportunity> totalOpportunities = new ArrayList<>();
-//    private static List<Account> totalAccounts = new ArrayList<>();
-//    private static List<SalesRep> totalSalesReps = new ArrayList<>();
     public static final Pattern VALID_PHONENUMBER_REGEX =
             Pattern.compile("\\A[0-9]{9}\\z", Pattern.CASE_INSENSITIVE);
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
@@ -160,7 +154,8 @@ public class Utilities {
     }
 
     public static Account existingAccount(Long id, Contact contact, Opportunity opportunity, AccountRepository accountRepository) {
-        if (!accountRepository.existsById(id) || accountRepository.findAll().isEmpty()) throw new IllegalArgumentException("No account found with this id!");
+        if (!accountRepository.existsById(id) || accountRepository.findAll().isEmpty())
+            throw new IllegalArgumentException("No account found with this id!");
         Account account = accountRepository.findById(id).get();
         account.setContacts(contact);
         //account.getOpportunities().add(opportunity);
@@ -214,17 +209,6 @@ public class Utilities {
             }
         }
     }
-
-//    public static void showLeads(Map<Long, Lead> leadMap) {
-//        if (leadMap.isEmpty()) {
-//            throw new IllegalArgumentException("There are no leads to show.");
-//        } else {
-//            System.out.println("\033[0;1m Existing leads: \033[0;0m\n");
-//            for (Lead lead : leadMap.values()) {
-//                System.out.println("•" + lead.toString());
-//            }
-//        }
-//    }
 
     public static void showOpportunities(OpportunityRepository opportunityRepository) {
         System.out.println("\033[0;1m Existing opportunities: \033[0;0m\n");
