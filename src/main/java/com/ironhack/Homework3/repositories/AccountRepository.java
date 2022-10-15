@@ -41,8 +41,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Long minEmployeeCount();
 
     //The median employeeCount can be displayed by typing “Median EmployeeCount”
-    @Query(value = "SELECT AVG(employee_count) as median FROM(" +
-            "SELECT employee_count FROM account as acc ORDER BY acc.employee_count) as query1 " +
-            "WHERE (SELECT @id = @id + 1) BETWEEN @employee_count/2.0 and @employee_count/2.0 + 1", nativeQuery = true)
+    @Query(value = "WITH v AS (SELECT *, COUNT(*) OVER () AS a, row_number() OVER (ORDER BY employee_count) as rn FROM Account) SELECT AVG(employee_count) FROM v WHERE rn IN (FLOOR((a+1)/2), FLOOR((a+2)/2))", nativeQuery = true)
     Long medianEmployeeCount();
 }

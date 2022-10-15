@@ -17,10 +17,10 @@ import static java.lang.Long.parseLong;
 
 public class Menu {
 
-    private Scanner input;
+    private static Scanner input;
 
 
-    public void mainMenu(AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
+    public static void mainMenu(AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
         System.out.println("=========");
         System.out.println("\033[0;1mMAIN MENU\033[0;0m");
         System.out.println("\033[0;1mAvailable commands: \033[0;0m");
@@ -47,7 +47,7 @@ public class Menu {
         }
     }
 
-    public void getMethodInput(AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
+    public static void getMethodInput(AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
         input = new Scanner(System.in);
         String methodAndId = input.nextLine().toLowerCase().replaceAll("\\W+", "");
         if (methodAndId.isBlank()) {
@@ -169,7 +169,7 @@ public class Menu {
 
             case "report":
                 try {
-                    ReportFeatures.repMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
+                    ReportFeatures.repMenu(salesRepRepository, opportunityRepository, leadRepository, accountRepository);
                 } catch (IllegalArgumentException e) {
                     backToMainMenu(e, accountRepository, leadRepository, opportunityRepository, salesRepRepository);
                 }
@@ -182,7 +182,7 @@ public class Menu {
         }
     }
 
-    public void backToMainMenu(Exception e, AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
+    public static void backToMainMenu(Exception e, AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
         System.err.println(e.getMessage());
         System.err.println("Going back to the main menu.");
         mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);

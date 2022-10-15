@@ -117,6 +117,6 @@ public class AccountRepositoryTest {
     void medianEmployeeCount_works() {
         Long employee = accountRepository.medianEmployeeCount();
         System.out.println(employee);
-        //Assertions.assertEquals(300, employee);
+        Assertions.assertEquals(300, employee);
     }
 }

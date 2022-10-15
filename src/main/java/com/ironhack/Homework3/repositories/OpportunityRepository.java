@@ -1,6 +1,5 @@
 package com.ironhack.Homework3.repositories;
 
-import com.ironhack.Homework3.enums.Industry;
 import com.ironhack.Homework3.models.Opportunity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,22 +10,18 @@ import java.util.List;
 @Repository
 public interface OpportunityRepository extends JpaRepository<Opportunity, Long> {
 
-
+    //by Product
     //The mean quantity of products order can be displayed
     @Query("SELECT AVG(quantity) FROM Opportunity ")
     Double averageQuantityOfProducts();
 
-    //the median quantity of products order
-   // @Query("SELECT AVG(mid_vals) as 'median' FROM ("
-      //      SELECT  Opportunity.quantity AS 'mid_vals' FROM ("SELECT @row:=@row+1 AS 'row', ))")
+    //The median quantity of products order
+    @Query(value = "WITH v AS (SELECT *, COUNT(*) OVER () AS a, row_number() OVER (ORDER BY quantity) as rn FROM Opportunity) SELECT AVG(quantity) FROM v WHERE rn IN (FLOOR((a+1)/2), FLOOR((a+2)/2))", nativeQuery = true)
+    Double medianQuantityOfProducts();
 
-
-    //by Product
     //A count of all Opportunities by the product
     @Query("Select count(id) From Opportunity group by product")
     List<Object[]> findCountByProduct();
-    //by Product
-
 
     //The maximum quantity of products order
     @Query("SELECT MAX(quantity) FROM Opportunity")
@@ -36,12 +31,13 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     @Query("SELECT MIN(quantity) FROM Opportunity")
     Long minQuantityOfProducts();
 
-//A count of all Opportunities by CITY
-
+    //A count of all Opportunities by CITY
     @Query("SELECT a.city, COUNT(o) FROM Opportunity o JOIN o.accountId a GROUP BY a.city")
     List<Object[]> countOpportunitiesByCity();
+
     @Query("SELECT a.city, COUNT(o) FROM Opportunity o JOIN o.accountId a  WHERE o.status = com.ironhack.Homework3.enums.Status.CLOSED_WON GROUP BY a.city")
     List<Object[]> countClosedWonOpportunitiesByCity();
+
     @Query("SELECT a.city, COUNT(o) FROM Opportunity o JOIN o.accountId a  WHERE o.status = com.ironhack.Homework3.enums.Status.CLOSED_LOST GROUP BY a.city")
     List<Object[]> countClosedLostOpportunitiesByCity();
 
@@ -52,13 +48,13 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     @Query("SELECT a.country, COUNT(op) FROM Opportunity op JOIN op.accountId a GROUP BY a.country")
     List<Object[]> countOpportunitiesByCountry();
 
-    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status = 'OPEN' GROUP BY a.country")
+    @Query("SELECT COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status = 'OPEN' GROUP BY a.country")
     List<Object[]> countOpportunitiesByCountryWhereStatusLikeOpen();
 
-    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status = 'CLOSED_WON' GROUP BY a.country")
+    @Query("SELECT COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status = 'CLOSED_WON' GROUP BY a.country")
     List<Object[]> countOpportunitiesByCountryWhereStatusLikeWon();
 
-    @Query("SELECT op.status, COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status = 'CLOSED_LOST' GROUP BY a.country")
+    @Query("SELECT COUNT(op), a.country FROM Opportunity op JOIN op.accountId a WHERE op.status = 'CLOSED_LOST' GROUP BY a.country")
     List<Object[]> countOpportunitiesByCountryWhereStatusLikeLost();
 
     //Queries grouped by PRODUCT
@@ -87,20 +83,8 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     Long minOpportunitiesAccount();
 
     //The median number of Opportunities associated with an Account can be displayed by typing “Median Opps per Account”
+    @Query(value = "WITH v AS (SELECT *, COUNT(*) OVER () AS a, row_number() OVER (ORDER BY account_id) as rn FROM Opportunity) SELECT AVG(account_id) FROM v WHERE rn IN (FLOOR((a+1)/2), FLOOR((a+2)/2))", nativeQuery = true)
+    Double medianOpportunitiesAccount();
 
 }
-/*
-SELECT AVG(mid_vals) AS 'median' FROM (
- SELECT tab1.MyNumber AS 'mid_vals' FROM
-  (
-   SELECT @row:=@row+1 AS 'row', a.MyNumber
-   FROM dataset AS a, (SELECT @row:=0) AS r
-   ORDER BY a.MyNumber
-  ) AS tab1,
-  (
-   SELECT COUNT(*) as 'count'
-   FROM dataset x
-  ) AS tab2
-  WHERE tab1.row >= tab2.count/2 and tab1.row <= ((tab2.count/2) +1)) AS tab3;
-  }
- */
+

@@ -1,9 +1,6 @@
 package com.ironhack.Homework3;
 
-import com.ironhack.Homework3.repositories.AccountRepository;
-import com.ironhack.Homework3.repositories.LeadRepository;
-import com.ironhack.Homework3.repositories.OpportunityRepository;
-import com.ironhack.Homework3.repositories.SalesRepRepository;
+import com.ironhack.Homework3.repositories.*;
 import com.ironhack.Homework3.utilities.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -26,7 +23,6 @@ public class Homework3Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Menu menu = new Menu();
-		menu.mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
+		Menu.mainMenu(accountRepository, leadRepository, opportunityRepository, salesRepRepository);
 	}
 }

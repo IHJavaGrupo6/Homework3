@@ -21,10 +21,10 @@ public class Account {
     private Long employeeCount;
     private String city;
     private String country;
-    @ElementCollection
-    private List<Contact> contacts;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<Contact> contacts = new ArrayList<>();
     @OneToMany(mappedBy = "accountId")
-    private List<Opportunity> opportunities;
+    private List<Opportunity> opportunities = new ArrayList<>();
 
     // Constructor empty
     public Account() {
@@ -50,7 +50,10 @@ public class Account {
         opportunities.add(opportunity);
     }
 
-    // Constructor using a list of contacts and a list of opportunities
+    public void setContacts(Contact contact) {
+        this.contacts.add(contact);
+    }
+// Constructor using a list of contacts and a list of opportunities
 
     public Account(Industry industry, long employeeCount, String city, String country, List<Contact> contacts, List<Opportunity> opportunities) {
         this.industry = industry;

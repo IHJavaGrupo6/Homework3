@@ -1,26 +1,20 @@
 package com.ironhack.Homework3.utilities;
 
-import com.ironhack.Homework3.enums.Product;
 import com.ironhack.Homework3.models.*;
 import com.ironhack.Homework3.repositories.AccountRepository;
 import com.ironhack.Homework3.repositories.LeadRepository;
 import com.ironhack.Homework3.repositories.OpportunityRepository;
 import com.ironhack.Homework3.repositories.SalesRepRepository;
 
-import java.util.*;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.lang.Long.parseLong;
 
 public class Utilities {
-//    private static Map<Long, Lead> leadMap = new HashMap<>();
-//    private static List<Contact> totalContacts = new ArrayList<>();
-//    private static List<Opportunity> totalOpportunities = new ArrayList<>();
-//    private static List<Account> totalAccounts = new ArrayList<>();
-//    private static List<SalesRep> totalSalesReps = new ArrayList<>();
     public static final Pattern VALID_PHONENUMBER_REGEX =
-            Pattern.compile("\\A[0-9]{1}\\z", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("\\A[0-9]{9}\\z", Pattern.CASE_INSENSITIVE);
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
@@ -87,6 +81,8 @@ public class Utilities {
         while (repeatAccQuestion) {
             try {
                 account = accountQuestion(contact, opportunity, accountRepository);
+                opportunity.setAccountId(accountRepository.findById(account.getId()).get());
+                opportunityRepository.save(opportunity);
                 repeatAccQuestion = false;
             } catch (IllegalArgumentException e) {
                 System.err.println(e.getMessage());
@@ -127,6 +123,7 @@ public class Utilities {
                 try {
                     Long id = getNumber("Please enter the id of the account that you want to associate the opportunity with: ");
                     account = existingAccount(id, contact, opportunity, accountRepository);
+
                     repeatAcc = false;
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
@@ -157,10 +154,12 @@ public class Utilities {
     }
 
     public static Account existingAccount(Long id, Contact contact, Opportunity opportunity, AccountRepository accountRepository) {
-        if (!accountRepository.existsById(id)) throw new IllegalArgumentException("No account found with this id!");
+        if (!accountRepository.existsById(id) || accountRepository.findAll().isEmpty())
+            throw new IllegalArgumentException("No account found with this id!");
         Account account = accountRepository.findById(id).get();
-        account.getContacts().add(contact);
-        account.getOpportunities().add(opportunity);
+        account.setContacts(contact);
+        //account.getOpportunities().add(opportunity);
+        accountRepository.save(account);
         return account;
     }
 
@@ -178,7 +177,7 @@ public class Utilities {
 
     public static Account newAccount(String industry, long employeeCount, String city, String country, Contact contact, Opportunity opportunity) {
         Account account = new Account(industry, employeeCount, city, country);
-        account.c.add(contact);
+        account.setContacts(contact);
         account.getOpportunities().add(opportunity);
         return account;
     }
@@ -210,17 +209,6 @@ public class Utilities {
             }
         }
     }
-
-//    public static void showLeads(Map<Long, Lead> leadMap) {
-//        if (leadMap.isEmpty()) {
-//            throw new IllegalArgumentException("There are no leads to show.");
-//        } else {
-//            System.out.println("\033[0;1m Existing leads: \033[0;0m\n");
-//            for (Lead lead : leadMap.values()) {
-//                System.out.println("•" + lead.toString());
-//            }
-//        }
-//    }
 
     public static void showOpportunities(OpportunityRepository opportunityRepository) {
         System.out.println("\033[0;1m Existing opportunities: \033[0;0m\n");
